@@ -1,0 +1,160 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/dark_grey"
+    android:orientation="vertical"
+    tools:context=".RegisterRecordActivity">
+
+    <!--  Customised toolbar layout -->
+    <include
+        android:id="@+id/toolbar"
+        layout="@layout/toolbar" />
+
+    <!--  Title  -->
+    <TextView
+        android:id="@+id/textView2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_horizontal"
+        android:layout_marginTop="20dp"
+        android:textSize="32sp"
+        android:textColor="@color/white"
+        android:text="New Record" />
+
+    <!--Email-->
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/text_input_name"
+        android:layout_width="350dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="30dp"
+        app:errorEnabled="true">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/customer_input"
+            android:hint="Name"
+            android:inputType="textEmailAddress" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <!--Email-->
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/text_input_email"
+        android:layout_width="350dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        app:errorEnabled="true">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/customer_input"
+            android:hint="Email"
+            android:inputType="textEmailAddress" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+
+    <!--Password-->
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/text_input_password"
+        android:layout_width="350dp"
+        android:layout_gravity="center_horizontal"
+        android:layout_height="wrap_content"
+        app:errorEnabled="true"
+        app:passwordToggleEnabled="true">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Password"
+            android:background="@drawable/customer_input"
+            android:inputType="textPassword" />
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <!--Web Link-->
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/text_input_webLink"
+        android:layout_width="350dp"
+        android:layout_gravity="center_horizontal"
+        android:layout_height="wrap_content"
+        app:errorEnabled="true">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/customer_input"
+            android:hint="Web link"
+            android:inputType="textShortMessage" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <!--Logo-->
+<!--    <View-->
+<!--        android:layout_width="300dp"-->
+<!--        android:layout_height="20dp"-->
+<!--        android:background="@color/white"/>-->
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/text_input_Logo"
+        android:layout_width="350dp"
+        android:layout_gravity="center_horizontal"
+        android:layout_height="50dp"
+        android:layout_marginTop="-5dp"
+        android:layout_marginBottom="22dp"
+        android:paddingBottom="2dp"
+        android:background="@drawable/customer_input"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense.ExposedDropdownMenu">
+
+        <ImageView
+            android:id="@+id/imageLogo"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_marginTop="-42dp"
+            android:layout_marginLeft="5dp"
+            android:background="@drawable/circle_photo"
+            tools:visibility="visible" />
+
+        <Spinner
+            android:id="@+id/spinner_icon"
+            android:layout_width="290dp"
+            android:layout_marginTop="-55dp"
+            android:layout_height="65dp"
+            android:layout_gravity="right"
+            android:contentDescription="dropdown"
+            android:inputType="none" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <!--Note-->
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/text_input_Note"
+        android:layout_height="wrap_content"
+        android:layout_width="350dp"
+        android:layout_gravity="center_horizontal"
+        app:errorEnabled="true">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:layout_width="match_parent"
+            android:layout_height="77dp"
+            android:background="@drawable/customer_input"
+            android:hint="Note"
+            android:inputType="textLongMessage" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <!--Add Button-->
+    <androidx.appcompat.widget.AppCompatButton
+        android:layout_width="350dp"
+        android:layout_height="60dp"
+        android:onClick="confirmInput"
+        android:layout_gravity="center_horizontal"
+        android:text="Add"
+        android:textSize="20sp"
+        android:shadowColor="@color/white"
+        android:background="@drawable/custom_button"
+        android:textColor="@color/white" />
+
+
+</LinearLayout>

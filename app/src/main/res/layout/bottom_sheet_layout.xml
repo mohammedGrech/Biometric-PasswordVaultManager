@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:id="@+id/bottom_sheet"
+    android:gravity="center_horizontal"
+    android:orientation="vertical"
+    android:padding="16dp">
+
+    <!--  Go back Icon  -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:paddingLeft="8dp"
+        android:layout_marginTop="5dp">
+
+        <ImageView
+            android:id="@+id/closeSheet"
+            android:layout_width="31dp"
+            android:layout_height="30dp"
+            android:src="@drawable/baseline_arrow_back_24" />
+    </LinearLayout>
+
+    <!--  Create new Record + Icon  -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:padding="8dp"
+        android:layout_marginTop="5dp"
+        android:id="@+id/newRecord">
+
+        <ImageView
+            android:layout_width="31dp"
+            android:layout_height="22dp"
+            android:src="@drawable/secure_file" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:text="Create new Record"
+            android:textColor="@color/white"
+            android:textSize="16sp" />
+    </LinearLayout>
+
+    <!--  Generate new Password + Icon  -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:padding="8dp"
+        android:layout_marginTop="5dp"
+        android:id="@+id/generatePassword">
+
+        <ImageView
+            android:layout_width="31dp"
+            android:layout_height="24dp"
+            android:src="@drawable/generate_psw" />
+
+        <TextView
+            android:layout_marginLeft="10dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Generate new Password"
+            android:textColor="@color/white"
+            android:textSize="16sp"/>
+    </LinearLayout>
+
+    <!--  Customised toolbar layout -->
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+</LinearLayout>

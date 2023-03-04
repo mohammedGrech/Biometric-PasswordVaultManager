@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item
+        android:title="Search"
+        android:icon="@drawable/search_icon"
+        android:id="@+id/search"
+        app:showAsAction="always"/>
+    <item
+        android:title=" "
+        android:icon="@drawable/three_dots"
+        app:showAsAction="ifRoom">
+        <menu>
+            <item
+                android:title="Filter"
+                android:id="@+id/filter"
+                android:icon="@drawable/filter_icon"
+                app:showAsAction="never"/>
+
+            <item
+                android:title="Backup"
+                android:id="@+id/backup"
+                android:icon="@drawable/save_icon"
+                app:showAsAction="never"/>
+
+            <item
+                android:title="Import"
+                android:id="@+id/importData"
+                android:icon="@drawable/upload_file"
+                app:showAsAction="never"/>
+
+            <item
+                android:title="Help"
+                android:id="@+id/help"
+                android:icon="@drawable/baseline_help_outline_24"
+                app:showAsAction="never"/>
+
+            <item
+                android:title="Log out"
+                android:id="@+id/exit"
+                android:icon="@drawable/baseline_exit_to_app_24"
+                app:showAsAction="never"/>
+        </menu>
+    </item>
+</menu>

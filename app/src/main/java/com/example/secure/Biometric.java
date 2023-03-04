@@ -31,9 +31,12 @@ public class Biometric {
     private BiometricPrompt biometricPrompt;
     public BiometricPrompt.PromptInfo promptInfo;
 
+    // Below line denotes that the annotated element should only be called on the given API level or higher
     @RequiresApi(api = Build.VERSION_CODES.M)
+    // This function checks the compatibility of the phone for Biometric authentication
     public boolean checkCompatability (Context context) {
 
+        // BiometricManager provides system information related to biometrics (e.g. fingerprint, face, etc.).
         BiometricManager biometricManager = BiometricManager.from(context);
         switch (biometricManager.BIOMETRIC_SUCCESS)
         {
@@ -51,18 +54,20 @@ public class Biometric {
         }
         return true;
     }
+
+    // This function can be called in other activity classes in order to prompt the biometric functionality
+    // teh Parameter Context is referred to an activity class. i.e. MainActivity
     public void biometricPrompt(Context context){
         //Create executor
         executor = ContextCompat.getMainExecutor(context);
 
-        //Create Biometric prompt to and return the result (whether successful or not)
+        //Create Biometric prompt and return the result (whether successful or not)
         biometricPrompt=new BiometricPrompt((FragmentActivity)context, executor, new BiometricPrompt.AuthenticationCallback() {
             @Override
             public void onAuthenticationError(int errorCode, @NonNull CharSequence errString) {
                 super.onAuthenticationError(errorCode, errString);
                 Toast.makeText(context.getApplicationContext(), "Authentication cancelled", Toast.LENGTH_SHORT).show();
             }
-
             @Override
             public void onAuthenticationSucceeded(@NonNull BiometricPrompt.AuthenticationResult result) {
                 super.onAuthenticationSucceeded(result);
@@ -70,7 +75,6 @@ public class Biometric {
                 Intent intent = new Intent(context,HomeActivity.class);
                 context.startActivity(intent);
             }
-
             @Override
             public void onAuthenticationFailed() {
                 super.onAuthenticationFailed();
@@ -78,7 +82,8 @@ public class Biometric {
             }
         });
 
-        //Create Biometric prompt to and return the result (whether successful or not)
+        // Display the popup fingerprint/PIN to the user
+        // Note: BIOMETRIC_STRONG is for finger print while BIOMETRIC_WEAK includes Face recognition
         promptInfo = new BiometricPrompt.PromptInfo.Builder()
                 .setTitle("Biometric login")
                 .setSubtitle("Unlock Secure with fingerprint").setAllowedAuthenticators(BiometricManager.Authenticators.BIOMETRIC_STRONG |
