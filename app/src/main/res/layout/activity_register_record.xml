@@ -24,9 +24,8 @@
         android:textColor="@color/white"
         android:text="New Record" />
 
-    <!--Email-->
+    <!--name-->
     <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/text_input_name"
         android:layout_width="350dp"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
@@ -34,33 +33,33 @@
         app:errorEnabled="true">
 
         <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/text_input_name"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@drawable/customer_input"
             android:hint="Name"
-            android:inputType="textEmailAddress" />
+            android:inputType="text" />
     </com.google.android.material.textfield.TextInputLayout>
 
-    <!--Email-->
+    <!--email-->
     <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/text_input_email"
         android:layout_width="350dp"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
         app:errorEnabled="true">
 
         <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/text_input_username"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@drawable/customer_input"
-            android:hint="Email"
+            android:hint="email"
             android:inputType="textEmailAddress" />
     </com.google.android.material.textfield.TextInputLayout>
 
 
     <!--Password-->
     <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/text_input_password"
         android:layout_width="350dp"
         android:layout_gravity="center_horizontal"
         android:layout_height="wrap_content"
@@ -68,6 +67,7 @@
         app:passwordToggleEnabled="true">
 
         <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/text_input_password"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="Password"
@@ -78,13 +78,13 @@
 
     <!--Web Link-->
     <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/text_input_webLink"
         android:layout_width="350dp"
         android:layout_gravity="center_horizontal"
         android:layout_height="wrap_content"
         app:errorEnabled="true">
 
         <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/text_input_webLink"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@drawable/customer_input"
@@ -102,10 +102,9 @@
         android:id="@+id/text_input_Logo"
         android:layout_width="350dp"
         android:layout_gravity="center_horizontal"
-        android:layout_height="50dp"
+        android:layout_height="55dp"
         android:layout_marginTop="-5dp"
         android:layout_marginBottom="22dp"
-        android:paddingBottom="2dp"
         android:background="@drawable/customer_input"
         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense.ExposedDropdownMenu">
 
@@ -114,7 +113,7 @@
             android:layout_width="40dp"
             android:layout_height="40dp"
             android:layout_marginTop="-42dp"
-            android:layout_marginLeft="5dp"
+            android:layout_marginLeft="9dp"
             android:background="@drawable/circle_photo"
             tools:visibility="visible" />
 
@@ -130,13 +129,13 @@
 
     <!--Note-->
     <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/text_input_Note"
         android:layout_height="wrap_content"
         android:layout_width="350dp"
         android:layout_gravity="center_horizontal"
         app:errorEnabled="true">
 
         <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/text_input_Note"
             android:layout_width="match_parent"
             android:layout_height="77dp"
             android:background="@drawable/customer_input"
@@ -146,6 +145,7 @@
 
     <!--Add Button-->
     <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/addRecord"
         android:layout_width="350dp"
         android:layout_height="60dp"
         android:onClick="confirmInput"
