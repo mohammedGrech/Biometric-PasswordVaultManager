@@ -1,9 +1,12 @@
 package com.example.secure;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -75,6 +78,7 @@ public class RegisterRecordActivity extends AppCompatActivity {
             public void onClick(View v) {
                 WebsiteModel websiteModel;
                 try {
+
                     //Feeding the full constructor(websiteModel) with user's input
                     websiteModel = new WebsiteModel(-1, recordName.getText().toString(), recordWebLink.getText().toString(),
                             recordusername.getText().toString(), recordPassword.getText().toString(), recordNote.getText().toString());
@@ -100,5 +104,26 @@ public class RegisterRecordActivity extends AppCompatActivity {
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.option_menu,menu);
         return true;
+    }
+
+    // Functionality of the menu buttons
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // Handle item selection
+        switch (item.getItemId()) {
+            case R.id.exit:
+                Intent intentMain = new Intent(this,MainActivity.class);
+                this.startActivity(intentMain);
+                finish();
+                System.exit(0);
+                return true;
+            case R.id.help:
+                Intent intentHelp = new Intent(this,HelpActivity.class);
+                this.startActivity(intentHelp);
+
+                Toast.makeText(this, "this is help", Toast.LENGTH_SHORT).show();;
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
     }
 }

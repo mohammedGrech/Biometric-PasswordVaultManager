@@ -167,7 +167,6 @@ public class HomeActivity extends AppCompatActivity {
                 .create().show();
     }
 
-
     //Context Menu to appear in the toolbar
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {

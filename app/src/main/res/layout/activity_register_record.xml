@@ -78,6 +78,7 @@
 
     <!--Web Link-->
     <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/dropdownText"
         android:layout_width="350dp"
         android:layout_gravity="center_horizontal"
         android:layout_height="wrap_content"
