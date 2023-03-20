@@ -1,9 +1,11 @@
 package com.example.secure;
+
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Patterns;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -16,12 +18,24 @@ import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.Toast;
 
+import java.util.regex.Pattern;
+
 
 public class RegisterRecordActivity extends AppCompatActivity {
 
+    private static final Pattern PASSWORD_PATTERN =
+            Pattern.compile("^" +
+                    //"(?=.*[0-9])" +         //at least 1 digit
+                    //"(?=.*[a-z])" +         //at least 1 lower case letter
+                    //"(?=.*[A-Z])" +         //at least 1 upper case letter
+                    "(?=.*[a-zA-Z])" +      //any letter
+                    "(?=.*[@#$%^&+=])" +    //at least 1 special character
+                    "(?=\\S+$)" +           //no white spaces
+                    ".{6,}" +               //at least 4 characters
+                    "$");
     // References to buttons and other controls on the layout
     Button addRecordButton;
-    EditText recordName, recordusername, recordPassword, recordWebLink, recordNote;
+    EditText recordName, recordEmail, recordPassword, recordWebLink, recordNote;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,11 +44,12 @@ public class RegisterRecordActivity extends AppCompatActivity {
 
         // Find button and layouts by ID
         recordName = findViewById(R.id.text_input_name);
-        recordusername = findViewById(R.id.text_input_username);
+        recordEmail = findViewById(R.id.text_input_email);
         recordWebLink = findViewById(R.id.text_input_webLink);
         recordPassword = findViewById(R.id.text_input_password);
         recordNote = findViewById(R.id.text_input_Note);
         addRecordButton = findViewById(R.id.addRecord);
+
 
         //Spinner for logos
         Spinner spinner = (Spinner) findViewById(R.id.spinner_icon);
@@ -54,7 +69,7 @@ public class RegisterRecordActivity extends AppCompatActivity {
 
                 ImageView logo = findViewById(R.id.imageLogo);
 
-                if (text.equals("facebook")){
+                if (text.equals("facebook")) {
                     logo.setBackgroundResource(R.drawable.facebook);
                 } else {
                     logo.setBackgroundResource(R.drawable.circle_photo);
@@ -78,12 +93,18 @@ public class RegisterRecordActivity extends AppCompatActivity {
             public void onClick(View v) {
                 WebsiteModel websiteModel;
                 try {
+                    String state = spinner.getSelectedItem().toString();
+                    Toast.makeText(RegisterRecordActivity.this, state, Toast.LENGTH_SHORT).show();
 
+                    if (!validateName() | !validateEmail() | !validatePassword() | !validateWebURL()){
+                        return;
+                    }
                     //Feeding the full constructor(websiteModel) with user's input
                     websiteModel = new WebsiteModel(-1, recordName.getText().toString(), recordWebLink.getText().toString(),
-                            recordusername.getText().toString(), recordPassword.getText().toString(), recordNote.getText().toString());
+                            recordEmail.getText().toString(), recordPassword.getText().toString(), recordNote.getText().toString());
+
                     Toast.makeText(RegisterRecordActivity.this, websiteModel.toString(), Toast.LENGTH_SHORT).show();
-                } catch (Exception e){
+                } catch (Exception e) {
                     Toast.makeText(RegisterRecordActivity.this, "Error creating this record", Toast.LENGTH_SHORT).show();
                     websiteModel = new WebsiteModel(-1, "error", "error", "error", "error", "error");
                 }
@@ -93,16 +114,76 @@ public class RegisterRecordActivity extends AppCompatActivity {
                 boolean success = database.addRecord(websiteModel);
 
                 // Just a check to see if the record has been added, can be removed after testing
-                Toast.makeText(RegisterRecordActivity.this,"Record Added= " + success,Toast.LENGTH_SHORT).show();
+                Toast.makeText(RegisterRecordActivity.this, "Record Added= " + success, Toast.LENGTH_SHORT).show();
             }
         }));
     }
+
+    private boolean validateName() {
+        String nameInput = recordName.getText().toString().toString();
+
+        if (nameInput.isEmpty()) {
+            recordName.setError("Field cannot be empty");
+            return false;
+        } else {
+            recordName.setError(null);
+            return true;
+        }
+    }
+
+    private boolean validateEmail() {
+        String emailInput = recordEmail.getText().toString().trim();
+
+        if (emailInput.isEmpty()) {
+            recordEmail.setError("Field cannot be empty");
+            return false;
+        } else if (!Patterns.EMAIL_ADDRESS.matcher(emailInput).matches()) {
+
+            recordEmail.setError("Email is not valid");
+            return false;
+        } else {
+            recordName.setError(null);
+            return true;
+        }
+    }
+
+    private boolean validatePassword() {
+        String passwordInput = recordPassword.getText().toString().trim();
+
+        if (passwordInput.isEmpty()) {
+            recordPassword.setError("Field cannot be empty");
+            return false;
+        } else if (!PASSWORD_PATTERN.matcher(passwordInput).matches()) {
+            recordPassword.setError("Password too weak");
+            return false;
+        } else {
+            recordPassword.setError(null);
+            return true;
+        }
+    }
+
+    private boolean validateWebURL() {
+        String webUrlInput = recordWebLink.getText().toString().trim();
+
+        if (webUrlInput.isEmpty()) {
+            recordWebLink.setError("Field cannot be empty");
+            return false;
+        } else if (!Patterns.WEB_URL.matcher(webUrlInput).matches()) {
+            recordWebLink.setError("Web link is not valid");
+            return false;
+        } else {
+            recordWebLink.setError(null);
+            return true;
+        }
+    }
+    
+    
 
     //Context Menu to appear in the toolbar
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.option_menu,menu);
+        inflater.inflate(R.menu.option_menu, menu);
         return true;
     }
 
@@ -111,16 +192,17 @@ public class RegisterRecordActivity extends AppCompatActivity {
         // Handle item selection
         switch (item.getItemId()) {
             case R.id.exit:
-                Intent intentMain = new Intent(this,MainActivity.class);
+                Intent intentMain = new Intent(this, MainActivity.class);
                 this.startActivity(intentMain);
                 finish();
                 System.exit(0);
                 return true;
             case R.id.help:
-                Intent intentHelp = new Intent(this,HelpActivity.class);
+                Intent intentHelp = new Intent(this, HelpActivity.class);
                 this.startActivity(intentHelp);
 
-                Toast.makeText(this, "this is help", Toast.LENGTH_SHORT).show();;
+                Toast.makeText(this, "this is help", Toast.LENGTH_SHORT).show();
+                ;
                 return true;
             default:
                 return super.onOptionsItemSelected(item);

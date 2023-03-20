@@ -19,8 +19,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center_horizontal"
-        android:layout_marginTop="20dp"
-        android:textSize="32sp"
+        android:layout_marginTop="15dp"
+        android:textSize="28sp"
         android:textColor="@color/white"
         android:text="New Record" />
 
@@ -49,7 +49,7 @@
         app:errorEnabled="true">
 
         <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/text_input_username"
+            android:id="@+id/text_input_email"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@drawable/customer_input"
