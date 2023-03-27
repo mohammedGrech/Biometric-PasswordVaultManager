@@ -1,10 +1,13 @@
 package com.example.secure;
 
 import android.annotation.SuppressLint;
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -21,7 +24,6 @@ public class RecycleViewAdapter extends RecyclerView.Adapter<RecycleViewAdapter.
     List<WebsiteModel> websiteModels;
     Context context;
 
-
     public RecycleViewAdapter(List<WebsiteModel> websiteModels, Context context) {
         this.websiteModels = websiteModels;
         this.context = context;
@@ -36,13 +38,14 @@ public class RecycleViewAdapter extends RecyclerView.Adapter<RecycleViewAdapter.
     }
 
     //    @Override
-
-
     @SuppressLint("SetTextI18n")
     @Override
     public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
+        final WebsiteModel webModel = websiteModels.get(position);
+        Integer index = websiteModels.indexOf(webModel);
         holder.recordName.setText(websiteModels.get(position).getName());
         String logoName = websiteModels.get(position).getName();
+
         if (logoName.toLowerCase().contains("facebook")){
             Glide.with(this.context).load(R.drawable.facebook).into(holder.recordLogo);
             holder.textLogo.setVisibility(View.GONE);
@@ -53,6 +56,39 @@ public class RecycleViewAdapter extends RecyclerView.Adapter<RecycleViewAdapter.
              String TextCombination = firstLetter +""+ secondLetter;
              holder.textLogo.setText(TextCombination.toUpperCase());
         }
+
+        //Delete rows
+        holder.btn_deleteRecord.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // Confirmation dialog box to delete a record
+                new AlertDialog.Builder(context)
+                        .setTitle("Confirmation")
+                        .setIcon(R.drawable.baseline_delete_24)
+                        .setCancelable(false)
+                        .setMessage("Are you sure to delete " + webModel.getName() + "?")
+                        //If user press Yes button
+                        .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                            @SuppressLint("NotifyDataSetChanged")
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                Database database = new Database(context);
+                                boolean result = database.deleteRecord(webModel.getId());
+                                // If deletion succeed
+
+                                // Notify user with their deletion
+                                Toast.makeText(context, webModel.getName() + " deleted.", Toast.LENGTH_SHORT).show();
+                                websiteModels.remove(webModel);
+                                notifyItemRemoved(index);
+                            }
+                        })
+                        // Record deletion will not succeed
+                        .setNegativeButton("No", null)
+                        //Display the alert
+                        .show();
+
+            }
+        });
 
 
     }
@@ -66,11 +102,14 @@ public class RecycleViewAdapter extends RecyclerView.Adapter<RecycleViewAdapter.
         TextView recordName;
         ImageView recordLogo;
         TextView textLogo;
+        ImageButton btn_deleteRecord;
         public MyViewHolder(@NonNull View itemView) {
             super(itemView);
             recordName = itemView.findViewById(R.id.recordNameLayout);
             recordLogo = itemView.findViewById(R.id.logoLayout);
             textLogo = itemView.findViewById(R.id.textLogo);
+            btn_deleteRecord = itemView.findViewById((R.id.deleteIcon));
+            btn_deleteRecord.findViewById(R.id.deleteIcon);
 
         }
     }

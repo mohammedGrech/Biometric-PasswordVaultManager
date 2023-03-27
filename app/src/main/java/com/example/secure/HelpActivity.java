@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.Toast;
 
 public class HelpActivity extends AppCompatActivity {
@@ -20,7 +21,15 @@ public class HelpActivity extends AppCompatActivity {
         // customised toolbar
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-
+        //Back button
+        toolbar.setNavigationIcon(getDrawable(R.drawable.arrow_back));
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(HelpActivity.this,HomeActivity.class);
+                startActivity(intent);
+            }
+        });
         // Change the title of the activity on the toolbar
         getSupportActionBar().setTitle("Help");
     }

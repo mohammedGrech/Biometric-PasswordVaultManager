@@ -122,11 +122,7 @@ public class HomeActivity extends AppCompatActivity {
         List<WebsiteModel> websiteList = database.getAllWebsites();
 
         // ArrayAdapter is needed to show the array in list view
-//        showStartDialog(websiteList);
-
-        fillWebsiteList();
         Log.d(TAG, "onCreate: "+websiteList.toString());
-//        Toast.makeText(this, "List: "+ websiteList.size(), Toast.LENGTH_SHORT).show();
 
         recyclerView = findViewById(R.id.recyclerViewWebsites);
 
@@ -144,27 +140,13 @@ public class HomeActivity extends AppCompatActivity {
 
     }
 
-    private void fillWebsiteList() {
-//        WebsiteModel web0 = new WebsiteModel(0,"manual_Momo","manual_URL","manual_username","manual_pass","manual_note");
-//        WebsiteModel web1 = new WebsiteModel(1,"manual_Momo1","manual_URL1","manual_username1","manual_pass1","manual_note1");
-////        WebsiteModel web2 = new WebsiteModel();
-////        WebsiteModel web3 = new WebsiteModel();
-//        websiteList.addAll(Arrays.asList(new WebsiteModel[]{web0, web1}));
-    }
-
-
-    private void showStartDialog(List text) {
-        //Create dialog box
-        new AlertDialog.Builder(this)
-                .setTitle("One Time Dialog")
-                .setMessage(text.toString())
-                .setPositiveButton("Dismiss", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        dialog.dismiss();
-                    }
-                })
-                .create().show();
+    // Reloading page to update data
+    @Override
+    public void onRestart()
+    {
+        super.onRestart();
+        finish();
+        startActivity(getIntent());
     }
 
     //Context Menu to appear in the toolbar
@@ -187,8 +169,6 @@ public class HomeActivity extends AppCompatActivity {
             case R.id.help:
                 Intent intent = new Intent(this,HelpActivity.class);
                 this.startActivity(intent);
-
-                Toast.makeText(this, "this is help", Toast.LENGTH_SHORT).show();;
                 return true;
             default:
                 return super.onOptionsItemSelected(item);

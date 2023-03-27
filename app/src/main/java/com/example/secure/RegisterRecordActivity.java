@@ -87,6 +87,16 @@ public class RegisterRecordActivity extends AppCompatActivity {
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
+        //Back button
+        toolbar.setNavigationIcon(getDrawable(R.drawable.arrow_back));
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(RegisterRecordActivity.this,HomeActivity.class);
+                startActivity(intent);
+            }
+        });
+
         //Add records
         addRecordButton.setOnClickListener((new View.OnClickListener() {
             @Override
@@ -94,7 +104,6 @@ public class RegisterRecordActivity extends AppCompatActivity {
                 WebsiteModel websiteModel;
                 try {
                     String state = spinner.getSelectedItem().toString();
-                    Toast.makeText(RegisterRecordActivity.this, state, Toast.LENGTH_SHORT).show();
 
                     if (!validateName() | !validateEmail() | !validatePassword() | !validateWebURL()){
                         return;
@@ -102,8 +111,6 @@ public class RegisterRecordActivity extends AppCompatActivity {
                     //Feeding the full constructor(websiteModel) with user's input
                     websiteModel = new WebsiteModel(-1, recordName.getText().toString(), recordWebLink.getText().toString(),
                             recordEmail.getText().toString(), recordPassword.getText().toString(), recordNote.getText().toString());
-
-                    Toast.makeText(RegisterRecordActivity.this, websiteModel.toString(), Toast.LENGTH_SHORT).show();
                 } catch (Exception e) {
                     Toast.makeText(RegisterRecordActivity.this, "Error creating this record", Toast.LENGTH_SHORT).show();
                     websiteModel = new WebsiteModel(-1, "error", "error", "error", "error", "error");
@@ -176,8 +183,6 @@ public class RegisterRecordActivity extends AppCompatActivity {
             return true;
         }
     }
-    
-    
 
     //Context Menu to appear in the toolbar
     @Override
@@ -200,9 +205,6 @@ public class RegisterRecordActivity extends AppCompatActivity {
             case R.id.help:
                 Intent intentHelp = new Intent(this, HelpActivity.class);
                 this.startActivity(intentHelp);
-
-                Toast.makeText(this, "this is help", Toast.LENGTH_SHORT).show();
-                ;
                 return true;
             default:
                 return super.onOptionsItemSelected(item);

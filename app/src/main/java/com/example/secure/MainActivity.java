@@ -65,7 +65,6 @@ public class MainActivity extends AppCompatActivity {
         // customised toolbar
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-
     }
 
     //Method to display the one time message

@@ -10,30 +10,32 @@
     <!--  Go back Icon  -->
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="40dp"
         android:orientation="horizontal"
         android:paddingLeft="8dp"
         android:layout_marginTop="5dp">
 
         <ImageView
             android:id="@+id/closeSheet"
-            android:layout_width="31dp"
-            android:layout_height="30dp"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:layout_marginTop="8dp"
             android:src="@drawable/baseline_arrow_back_24" />
     </LinearLayout>
 
     <!--  Create new Record + Icon  -->
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="56dp"
         android:orientation="horizontal"
         android:padding="8dp"
-        android:layout_marginTop="5dp"
+
         android:id="@+id/newRecord">
 
         <ImageView
             android:layout_width="31dp"
             android:layout_height="22dp"
+            android:layout_marginTop="9dp"
             android:src="@drawable/secure_file" />
 
         <TextView
@@ -41,6 +43,7 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="10dp"
             android:text="Create new Record"
+            android:layout_marginTop="9dp"
             android:textColor="@color/white"
             android:textSize="16sp" />
     </LinearLayout>
@@ -48,15 +51,16 @@
     <!--  Generate new Password + Icon  -->
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="56dp"
         android:orientation="horizontal"
         android:padding="8dp"
-        android:layout_marginTop="5dp"
+
         android:id="@+id/generatePassword">
 
         <ImageView
             android:layout_width="31dp"
             android:layout_height="24dp"
+            android:layout_marginTop="9dp"
             android:src="@drawable/generate_psw" />
 
         <TextView
@@ -65,6 +69,7 @@
             android:layout_height="wrap_content"
             android:text="Generate new Password"
             android:textColor="@color/white"
+            android:layout_marginTop="9dp"
             android:textSize="16sp"/>
     </LinearLayout>
 

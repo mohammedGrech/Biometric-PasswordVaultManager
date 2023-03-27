@@ -99,7 +99,25 @@ public class Database extends SQLiteOpenHelper {
         cursor.close();
         db.close();
         return list;
+    }
 
+    /* Deletes a website record from the "Websites" table */
+    public boolean deleteRecord(int webID){
+        SQLiteDatabase db = this.getWritableDatabase();
+        String query = "DELETE FROM " + TABLE_WEBSITES + " WHERE " + WEB_ID + " = " + webID;
+
+        Cursor cursor = db.rawQuery(query, null);
+
+        if(cursor.moveToFirst()){
+            cursor.close();
+            db.close();
+            return true;
+        }
+        else{
+            cursor.close();
+            db.close();
+            return false;
+        }
     }
 
 }
