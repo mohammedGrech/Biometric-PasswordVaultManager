@@ -24,12 +24,13 @@ public class Database extends SQLiteOpenHelper {
     public static final String WEB_URL = "web_url";
     public static final String WEB_username = "web_username";
     public static final String WEB_PASSWORD = "web_password";
+    public static final String WEB_LOGO = "web_logo";
     public static final String WEB_NOTE = "web_note";
     public static final String CODE_ID = "code_id";
     public static final String CODE_CODE = "code_code";
 
     public Database(@Nullable Context context) {
-        super(context, "secure.db", null, 1);
+        super(context, "secure.db", null, 2);
     }
 
     // this is called the first time a database is accessed.
@@ -45,6 +46,9 @@ public class Database extends SQLiteOpenHelper {
     // It prevents previous users apps from breaking when you change the database design.
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
+        if (oldVersion < 2) {
+            db.execSQL("ALTER TABLE " + TABLE_WEBSITES + " ADD COLUMN " + WEB_LOGO + " TEXT");
+        }
 
     }
 
