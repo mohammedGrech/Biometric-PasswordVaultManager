@@ -1,5 +1,6 @@
 package com.example.secure;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Build;
@@ -56,8 +57,10 @@ public class Biometric {
     }
 
     // This function can be called in other activity classes in order to prompt the biometric functionality
-    // teh Parameter Context is referred to an activity class. i.e. MainActivity
+    // the Parameter Context is referred to an activity class. i.e. MainActivity
     public void biometricPrompt(Context context){
+
+
         //Create executor
         executor = ContextCompat.getMainExecutor(context);
 

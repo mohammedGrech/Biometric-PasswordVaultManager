@@ -106,7 +106,7 @@ public class HomeActivity extends AppCompatActivity {
                     public void onClick(View v) {
                         Intent intent = new Intent(v.getContext(), RegisterRecordActivity.class);
                         startActivity(intent);
-                        Toast.makeText(HomeActivity.this, "Create record selected ", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(HomeActivity.this, "Create record selected", Toast.LENGTH_SHORT).show();
                         bottomSheetDialog.dismiss();
                     }
                 });
@@ -137,7 +137,16 @@ public class HomeActivity extends AppCompatActivity {
         // specify an adapter
         mAdapter = new RecycleViewAdapter(websiteList, HomeActivity.this);
         recyclerView.setAdapter(mAdapter);
+    }
 
+    // Destroy the application when the user exit
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        Intent intentMain = new Intent(this, MainActivity.class);
+        this.startActivity(intentMain);
+        finish();
+        System.exit(0);
     }
 
     // Reloading page to update data
@@ -163,6 +172,8 @@ public class HomeActivity extends AppCompatActivity {
         // Handle item selection
         switch (item.getItemId()) {
             case R.id.exit:
+                Intent intentMain = new Intent(this, MainActivity.class);
+                this.startActivity(intentMain);
                 finish();
                 System.exit(0);
                 return true;

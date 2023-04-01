@@ -18,11 +18,14 @@ import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
+
 import java.util.regex.Pattern;
 
 
 public class RegisterRecordActivity extends AppCompatActivity {
 
+    //password regex
     private static final Pattern PASSWORD_PATTERN =
             Pattern.compile("^" +
                     //"(?=.*[0-9])" +         //at least 1 digit
@@ -33,9 +36,11 @@ public class RegisterRecordActivity extends AppCompatActivity {
                     "(?=\\S+$)" +           //no white spaces
                     ".{6,}" +               //at least 4 characters
                     "$");
+
     // References to buttons and other controls on the layout
     Button addRecordButton;
     EditText recordName, recordEmail, recordPassword, recordWebLink, recordNote;
+    String recordLogo;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,7 +55,6 @@ public class RegisterRecordActivity extends AppCompatActivity {
         recordNote = findViewById(R.id.text_input_Note);
         addRecordButton = findViewById(R.id.addRecord);
 
-
         //Spinner for logos
         Spinner spinner = (Spinner) findViewById(R.id.spinner_icon);
         // Create an ArrayAdapter using the string array and a default spinner layout
@@ -64,23 +68,15 @@ public class RegisterRecordActivity extends AppCompatActivity {
         spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                String text = parent.getItemAtPosition(position).toString();
+                String logoText = parent.getItemAtPosition(position).toString();
                 // get image logo by ID
-
                 ImageView logo = findViewById(R.id.imageLogo);
-
-                if (text.equals("facebook")) {
-                    logo.setBackgroundResource(R.drawable.facebook);
-                } else {
-                    logo.setBackgroundResource(R.drawable.circle_photo);
-                }
-                Toast.makeText(getApplicationContext(), text, Toast.LENGTH_SHORT).show();
+                //Display logo
+                displayLogo(logo, logoText);
             }
 
             @Override
-            public void onNothingSelected(AdapterView<?> parent) {
-
-            }
+            public void onNothingSelected(AdapterView<?> parent) {}
         });
 
         // customised toolbar
@@ -103,29 +99,86 @@ public class RegisterRecordActivity extends AppCompatActivity {
             public void onClick(View v) {
                 WebsiteModel websiteModel;
                 try {
-                    String state = spinner.getSelectedItem().toString();
-
+                    recordLogo = spinner.getSelectedItem().toString();
                     if (!validateName() | !validateEmail() | !validatePassword() | !validateWebURL()){
                         return;
                     }
                     //Feeding the full constructor(websiteModel) with user's input
                     websiteModel = new WebsiteModel(-1, recordName.getText().toString(), recordWebLink.getText().toString(),
-                            recordEmail.getText().toString(), recordPassword.getText().toString(), recordNote.getText().toString());
+                            recordEmail.getText().toString(), recordPassword.getText().toString(), recordNote.getText().toString(), recordLogo);
                 } catch (Exception e) {
                     Toast.makeText(RegisterRecordActivity.this, "Error creating this record", Toast.LENGTH_SHORT).show();
-                    websiteModel = new WebsiteModel(-1, "error", "error", "error", "error", "error");
+                    websiteModel = new WebsiteModel(-1, "error", "error", "error", "error", "error", "error");
                 }
+                Toast.makeText(RegisterRecordActivity.this, "" +websiteModel.toString(), Toast.LENGTH_SHORT).show();
                 //Create database(if not created)
                 Database database = new Database(RegisterRecordActivity.this);
                 // add records from websiteModel to the database
                 boolean success = database.addRecord(websiteModel);
-
-                // Just a check to see if the record has been added, can be removed after testing
-                Toast.makeText(RegisterRecordActivity.this, "Record Added= " + success, Toast.LENGTH_SHORT).show();
             }
         }));
     }
 
+    //Display logo next to the spinner
+    private void displayLogo(ImageView logo, String logoText) {
+
+        // Set logo on the row
+        switch (logoText) {
+            case "Facebook":
+                logo.setBackgroundResource(R.drawable.facebook);
+                break;
+            case "WhatsApp":
+                logo.setBackgroundResource(R.drawable.whatsapp);
+                break;
+            case "Twitter":
+                logo.setBackgroundResource(R.drawable.twitter);
+                break;
+            case "Pinterest":
+                logo.setBackgroundResource(R.drawable.pinterest);
+                break;
+            case "Youtube":
+                logo.setBackgroundResource(R.drawable.youtube);
+                break;
+            case "Linkedin":
+                logo.setBackgroundResource(R.drawable.linkedin);
+                break;
+            case "Github":
+                logo.setBackgroundResource(R.drawable.github);
+                break;
+            case "Gmail":
+                logo.setBackgroundResource(R.drawable.gmail);
+                break;
+            case "Instagram":
+                logo.setBackgroundResource(R.drawable.instagram);
+                break;
+            case "Outlook":
+                logo.setBackgroundResource(R.drawable.outlook);
+                break;
+            case "Netflix":
+                logo.setBackgroundResource(R.drawable.netflix);
+                break;
+            case "Viber":
+                logo.setBackgroundResource(R.drawable.viber);
+                break;
+            case "Reddit":
+                logo.setBackgroundResource(R.drawable.reddit);
+                break;
+            case "Amazon":
+                logo.setBackgroundResource(R.drawable.amazon);;
+                break;
+            case "Spotify":
+                logo.setBackgroundResource(R.drawable.spotify);
+                break;
+            case "Amazon Prime":
+                logo.setBackgroundResource(R.drawable.amazon_prime);
+                break;
+            default:
+                logo.setBackgroundResource(R.drawable.circle_photo);
+                break;
+        }
+    }
+
+    //Validate Name
     private boolean validateName() {
         String nameInput = recordName.getText().toString().toString();
 
@@ -138,6 +191,7 @@ public class RegisterRecordActivity extends AppCompatActivity {
         }
     }
 
+    //Validate Email
     private boolean validateEmail() {
         String emailInput = recordEmail.getText().toString().trim();
 
@@ -154,6 +208,7 @@ public class RegisterRecordActivity extends AppCompatActivity {
         }
     }
 
+    //Validate Password
     private boolean validatePassword() {
         String passwordInput = recordPassword.getText().toString().trim();
 
@@ -169,6 +224,7 @@ public class RegisterRecordActivity extends AppCompatActivity {
         }
     }
 
+    //Validate URL
     private boolean validateWebURL() {
         String webUrlInput = recordWebLink.getText().toString().trim();
 

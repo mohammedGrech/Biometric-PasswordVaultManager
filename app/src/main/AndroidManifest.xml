@@ -15,9 +15,12 @@
         android:theme="@style/Theme.Secure"
         tools:targetApi="31">
         <activity
-            android:name=".RegisterRecordActivity"
-            android:label="Registration"
+            android:name=".UpdateRecord"
             android:exported="false" />
+        <activity
+            android:name=".RegisterRecordActivity"
+            android:exported="false"
+            android:label="Registration" />
         <activity
             android:name=".HelpActivity"
             android:exported="false" />

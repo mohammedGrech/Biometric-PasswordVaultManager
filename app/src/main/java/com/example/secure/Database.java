@@ -1,10 +1,15 @@
 package com.example.secure;
 
+import static androidx.fragment.app.FragmentManager.TAG;
+
+import android.annotation.SuppressLint;
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.util.Log;
+import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 
@@ -24,11 +29,12 @@ public class Database extends SQLiteOpenHelper {
     public static final String WEB_URL = "web_url";
     public static final String WEB_username = "web_username";
     public static final String WEB_PASSWORD = "web_password";
+    public static final String WEB_LOGO = "web_logo";
     public static final String WEB_NOTE = "web_note";
     public static final String CODE_ID = "code_id";
     public static final String CODE_CODE = "code_code";
 
-    public Database(@Nullable Context context) {
+    Database(@Nullable Context context) {
         super(context, "secure.db", null, 1);
     }
 
@@ -36,16 +42,14 @@ public class Database extends SQLiteOpenHelper {
     @Override
     public void onCreate(SQLiteDatabase db) {
         db.execSQL("CREATE TABLE " + TABLE_USER_INFO + " (" + USER_ID + " INTEGER PRIMARY KEY AUTOINCREMENT," + USER_NAME + " TEXT," + USER_SURNAME + " TEXT)");
-        db.execSQL("CREATE TABLE " + TABLE_WEBSITES + " (" + WEB_ID + " INTEGER PRIMARY KEY AUTOINCREMENT," + WEB_NAME + " TEXT," + WEB_URL + " TEXT," + WEB_username + " TEXT," + WEB_PASSWORD + " TEXT," + WEB_NOTE + " TEXT)");
+        db.execSQL("CREATE TABLE " + TABLE_WEBSITES + " (" + WEB_ID + " INTEGER PRIMARY KEY AUTOINCREMENT," + WEB_NAME + " TEXT," + WEB_URL + " TEXT," + WEB_username + " TEXT," + WEB_PASSWORD + " TEXT," + WEB_NOTE + " TEXT," + WEB_LOGO + " TEXT)");
         db.execSQL("CREATE TABLE " + TABLE_RECOVERY_CODES + " (" + CODE_ID + " INTEGER PRIMARY KEY AUTOINCREMENT," + USER_ID + " INTEGER," + CODE_CODE + " TEXT)");
-
     }
 
     //This is called if the database version changes.
     // It prevents previous users apps from breaking when you change the database design.
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-
     }
 
     // Adds a website record to the "Websites" table in the database
@@ -59,6 +63,7 @@ public class Database extends SQLiteOpenHelper {
         cv.put(WEB_username, websiteModel.getusername());
         cv.put(WEB_PASSWORD, websiteModel.getPassword());
         cv.put(WEB_NOTE, websiteModel.getNote());
+        cv.put(WEB_LOGO, websiteModel.getWeb_logo());
 
         long insert = db.insert(TABLE_WEBSITES, null, cv);
         if (insert == -1){
@@ -87,8 +92,9 @@ public class Database extends SQLiteOpenHelper {
                 String websiteusername = cursor.getString(3);
                 String websitePassword = cursor.getString(4);
                 String websiteNote = cursor.getString(5);
+                String webLogo = cursor.getString(6);
 
-                WebsiteModel newWebsite = new WebsiteModel(websiteID,websiteName,websiteURL,websiteusername,websitePassword,websiteNote);
+                WebsiteModel newWebsite = new WebsiteModel(websiteID,websiteName,websiteURL,websiteusername,websitePassword,websiteNote, webLogo);
                 list.add(newWebsite);
             }while (cursor.moveToNext());
         }
@@ -119,5 +125,25 @@ public class Database extends SQLiteOpenHelper {
             return false;
         }
     }
+
+    @SuppressLint("RestrictedApi")
+    void updateData(Integer row_id, String name, String email, String password, String url, String note, String webLogo) {
+        try {
+            SQLiteDatabase db = this.getWritableDatabase();
+            ContentValues cv = new ContentValues();
+            cv.put(WEB_NAME, name);
+            cv.put(WEB_URL, url);
+            cv.put(WEB_username, email);
+            cv.put(WEB_PASSWORD, password);
+            cv.put(WEB_NOTE, note);
+            cv.put(WEB_LOGO, webLogo);
+
+            db.update(TABLE_WEBSITES, cv, WEB_ID + "=" + row_id, null);
+        }catch (android.database.sqlite.SQLiteConstraintException exception){
+            Log.d(TAG, "failure to update word,", exception);
+        }
+    }
+
+
 
 }

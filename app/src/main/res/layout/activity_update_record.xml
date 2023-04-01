@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:background="@color/dark_grey"
     android:orientation="vertical"
-    tools:context=".RegisterRecordActivity">
+    tools:context=".UpdateRecord">
 
     <!--  Customised toolbar layout -->
     <include
@@ -15,14 +15,14 @@
 
     <!--  Title  -->
     <TextView
-        android:id="@+id/textrecordContainer"
+        android:id="@+id/updateTitle"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center_horizontal"
         android:layout_marginTop="15dp"
         android:textSize="28sp"
         android:textColor="@color/white"
-        android:text="New Record" />
+        android:text="Update Record" />
 
 
     <ScrollView
@@ -36,6 +36,7 @@
 
             <!--name-->
             <com.google.android.material.textfield.TextInputLayout
+
                 android:layout_width="350dp"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
@@ -43,7 +44,7 @@
                 app:errorEnabled="true">
 
                 <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/text_input_name"
+                    android:id="@+id/update_input_name"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:background="@drawable/customer_input"
@@ -59,7 +60,7 @@
                 app:errorEnabled="true">
 
                 <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/text_input_email"
+                    android:id="@+id/update_input_email"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="15dp"
@@ -78,7 +79,7 @@
                 app:passwordToggleEnabled="true">
 
                 <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/text_input_password"
+                    android:id="@+id/update_input_password"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="15dp"
@@ -97,7 +98,7 @@
                 app:errorEnabled="true">
 
                 <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/text_input_webLink"
+                    android:id="@+id/update_input_webLink"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="15dp"
@@ -107,7 +108,7 @@
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/text_input_Logo"
+                android:id="@+id/update_input_Logo"
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense.ExposedDropdownMenu"
                 android:layout_width="350dp"
                 android:layout_height="55dp"
@@ -117,7 +118,7 @@
                 android:background="@drawable/customer_input">
 
                 <ImageView
-                    android:id="@+id/imageLogo"
+                    android:id="@+id/update_imageLogo"
                     android:layout_width="40dp"
                     android:layout_height="40dp"
                     android:layout_marginLeft="9dp"
@@ -143,7 +144,7 @@
                 app:errorEnabled="true">
 
                 <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/text_input_Note"
+                    android:id="@+id/update_input_Note"
                     android:layout_width="match_parent"
                     android:layout_height="77dp"
                     android:layout_marginTop="15dp"
@@ -159,17 +160,16 @@
 
     <!--Add Button-->
     <androidx.appcompat.widget.AppCompatButton
-        android:id="@+id/addRecord"
+        android:id="@+id/updateRecord"
         android:layout_width="350dp"
         android:layout_height="60dp"
         android:onClick="confirmInput"
         android:layout_gravity="center_horizontal"
-        android:text="Add"
+        android:text="Update"
         android:textSize="20sp"
         android:shadowColor="@color/white"
         android:background="@drawable/custom_button"
         android:layout_marginTop="10dp"
         android:textColor="@color/white" />
-
 
 </LinearLayout>

@@ -7,16 +7,19 @@ public class WebsiteModel {
     private String username;
     private String password;
     private String note;
+    private String web_logo;
 
     // Constructors
 
-    public WebsiteModel(int id,String name, String url, String username, String password, String note) {
+
+    public WebsiteModel(int id, String name, String url, String username, String password, String note, String web_logo) {
         this.id = id;
         this.name = name;
         this.url = url;
         this.username = username;
         this.password = password;
         this.note = note;
+        this.web_logo = web_logo;
     }
 
     public WebsiteModel(){
@@ -48,9 +51,10 @@ public class WebsiteModel {
         return note;
     }
 
+    public String getWeb_logo() { return web_logo; }
+
+
     // Setters
-
-
     public void setId(int id) {
         this.id = id;
     }
@@ -75,6 +79,10 @@ public class WebsiteModel {
         this.note = note;
     }
 
+    public void setWeb_logo(String web_logo) {
+        this.web_logo = web_logo;
+    }
+
     //to string
     @Override
     public String toString() {
@@ -85,6 +93,7 @@ public class WebsiteModel {
                 ", username='" + username + '\'' +
                 ", password='" + password + '\'' +
                 ", note='" + note + '\'' +
+                ", web_logo='" + web_logo + '\'' +
                 '}';
     }
 }

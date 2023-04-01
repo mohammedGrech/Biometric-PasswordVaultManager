@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="@color/dark_grey"
-    android:orientation="vertical"
-    tools:context=".RegisterRecordActivity">
+    android:orientation="vertical">
+
 
     <!--  Customised toolbar layout -->
     <include
@@ -15,14 +15,14 @@
 
     <!--  Title  -->
     <TextView
-        android:id="@+id/textrecordContainer"
+        android:id="@+id/textView2"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginTop="30dp"
         android:gravity="center_horizontal"
-        android:layout_marginTop="15dp"
-        android:textSize="28sp"
+        android:text="Update Record"
         android:textColor="@color/white"
-        android:text="New Record" />
+        android:textSize="28sp" />
 
 
     <ScrollView
@@ -39,7 +39,7 @@
                 android:layout_width="350dp"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
-                android:layout_marginTop="30dp"
+                android:layout_marginTop="20dp"
                 app:errorEnabled="true">
 
                 <com.google.android.material.textfield.TextInputEditText
@@ -156,20 +156,31 @@
         </LinearLayout>
     </ScrollView>
 
-
     <!--Add Button-->
     <androidx.appcompat.widget.AppCompatButton
-        android:id="@+id/addRecord"
+        android:id="@+id/updateRecord"
         android:layout_width="350dp"
         android:layout_height="60dp"
         android:onClick="confirmInput"
         android:layout_gravity="center_horizontal"
-        android:text="Add"
+        android:text="Update"
         android:textSize="20sp"
         android:shadowColor="@color/white"
         android:background="@drawable/custom_button"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="5dp"
         android:textColor="@color/white" />
-
+    <!--Add Button-->
+    <androidx.appcompat.widget.AppCompatButton
+        android:visibility="invisible"
+        android:layout_width="390dp"
+        android:layout_height="60dp"
+        android:onClick="confirmInput"
+        android:layout_gravity="center_horizontal"
+        android:text="Update"
+        android:textSize="20sp"
+        android:shadowColor="@color/white"
+        android:background="@drawable/custom_button"
+        android:layout_marginTop="15dp"
+        android:textColor="@color/white" />
 
 </LinearLayout>

@@ -12,12 +12,22 @@
     <string name="How_to_enable_Biometric_fingerprint"><![CDATA[If you wish to use fingerprint authentication on Secure app, please enable biometric on \nSetting > Security > Fingerprint]]></string>
     <string-array name="logoList">
         <item>Logo</item>
-        <item>Venus</item>
-        <item>facebook</item>
-        <item>Mars</item>
-        <item>Jupiter</item>
-        <item>Saturn</item>
-        <item>Uranus</item>
-        <item>Neptune</item>
+        <item>Youtube</item>
+        <item>Facebook</item>
+        <item>WhatsApp</item>
+        <item>Pinterest</item>
+        <item>Twitter</item>
+        <item>Linkedin</item>
+        <item>Github</item>
+        <item>Gmail</item>
+        <item>Instagram</item>
+        <item>Outlook</item>
+        <item>Netflix</item>
+        <item>Instagram</item>
+        <item>Reddit</item>
+        <item>Amazon</item>
+        <item>Spotify</item>
+        <item>Amazon Prime</item>
+
     </string-array>
 </resources>

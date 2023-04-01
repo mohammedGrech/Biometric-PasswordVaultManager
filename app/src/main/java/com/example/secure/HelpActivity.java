@@ -34,6 +34,7 @@ public class HelpActivity extends AppCompatActivity {
         getSupportActionBar().setTitle("Help");
     }
 
+
     //Context Menu to appear in the toolbar
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
