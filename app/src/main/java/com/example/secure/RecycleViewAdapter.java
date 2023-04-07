@@ -7,11 +7,15 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Looper;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Filter;
+import android.widget.Filterable;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -24,11 +28,13 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 
+import java.util.ArrayList;
 import java.util.List;
 
-public class RecycleViewAdapter extends RecyclerView.Adapter<RecycleViewAdapter.MyViewHolder> {
+public class RecycleViewAdapter extends RecyclerView.Adapter<RecycleViewAdapter.MyViewHolder> implements Filterable {
 
     List<WebsiteModel> websiteModels;
+    List<WebsiteModel> getWebsiteModelsFilter = new ArrayList<>();
     Context context;
 
     Biometric biometric;
@@ -38,6 +44,7 @@ public class RecycleViewAdapter extends RecyclerView.Adapter<RecycleViewAdapter.
     public RecycleViewAdapter(List<WebsiteModel> websiteModels, Context context) {
         this.websiteModels = websiteModels;
         this.context = context;
+        this.getWebsiteModelsFilter = websiteModels;
     }
 
     @NonNull
@@ -197,6 +204,38 @@ public class RecycleViewAdapter extends RecyclerView.Adapter<RecycleViewAdapter.
     @Override
     public int getItemCount() {
         return websiteModels.size();
+    }
+
+    @Override
+    public Filter getFilter() {
+        Filter filter = new Filter() {
+            @Override
+            protected FilterResults performFiltering(CharSequence constraint) {
+                FilterResults filterResults = new FilterResults();
+                if(constraint == null || constraint.length() == 0){
+                    filterResults.values = getWebsiteModelsFilter;
+                    filterResults.count = getWebsiteModelsFilter.size();
+                }else{
+                    String searchStr = constraint.toString().toLowerCase();
+                    List<WebsiteModel> filterWebsiteModels = new ArrayList<>();
+                    for (WebsiteModel websiteModel: getWebsiteModelsFilter){
+                        if (websiteModel.getName().toLowerCase().contains(searchStr)){
+                            filterWebsiteModels.add(websiteModel);
+                        }
+                    }
+                    filterResults.values = filterWebsiteModels;
+                    filterResults.count = filterWebsiteModels.size();
+                }
+                return filterResults;
+            }
+
+            @Override
+            protected void publishResults(CharSequence constraint, FilterResults results) {
+                websiteModels = (List<WebsiteModel>) results.values;
+                notifyDataSetChanged();
+            }
+        };
+        return filter;
     }
 
     public class MyViewHolder extends RecyclerView.ViewHolder{

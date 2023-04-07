@@ -11,13 +11,12 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Toast;
 
-public class HelpActivity extends AppCompatActivity {
+public class PrivacyPolicy extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_help);
-
+        setContentView(R.layout.activity_privacy_policy);
         // customised toolbar
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -26,12 +25,13 @@ public class HelpActivity extends AppCompatActivity {
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(HelpActivity.this,HomeActivity.class);
+                Intent intent = new Intent(PrivacyPolicy.this,HomeActivity.class);
                 startActivity(intent);
             }
         });
         // Change the title of the activity on the toolbar
-        getSupportActionBar().setTitle("Help");
+        getSupportActionBar().setTitle("Privacy Policy");
+
     }
 
     @Override
@@ -82,10 +82,8 @@ public class HelpActivity extends AppCompatActivity {
             case R.id.help:
                 Intent intent2 = new Intent(this,HelpActivity.class);
                 this.startActivity(intent2);
-                return true;
-            case R.id.privacyPolicy:
-                Intent intentPrivacy = new Intent(this,PrivacyPolicy.class);
-                this.startActivity(intentPrivacy);
+
+                Toast.makeText(this, "this is help", Toast.LENGTH_SHORT).show();
                 return true;
             default:
                 return super.onOptionsItemSelected(item);

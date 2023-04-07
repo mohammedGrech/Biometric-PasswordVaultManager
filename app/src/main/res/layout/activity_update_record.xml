@@ -6,7 +6,8 @@
     android:layout_height="match_parent"
     android:background="@color/dark_grey"
     android:orientation="vertical"
-    tools:context=".UpdateRecord">
+    tools:context=".UpdateRecord"
+    android:filterTouchesWhenObscured="true">
 
     <!--  Customised toolbar layout -->
     <include
@@ -26,6 +27,7 @@
 
 
     <ScrollView
+        android:id="@+id/updateScrollView"
         android:layout_width="match_parent"
         android:layout_height="470dp">
 

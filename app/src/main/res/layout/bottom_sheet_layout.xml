@@ -5,7 +5,8 @@
     android:id="@+id/bottom_sheet"
     android:gravity="center_horizontal"
     android:orientation="vertical"
-    android:padding="16dp">
+    android:padding="16dp"
+    android:filterTouchesWhenObscured="true">
 
     <!--  Go back Icon  -->
     <LinearLayout

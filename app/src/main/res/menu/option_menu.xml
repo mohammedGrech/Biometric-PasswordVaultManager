@@ -5,7 +5,8 @@
         android:title="Search"
         android:icon="@drawable/search_icon"
         android:id="@+id/search"
-        app:showAsAction="always"/>
+        app:showAsAction="ifRoom|collapseActionView"
+        app:actionViewClass="androidx.appcompat.widget.SearchView" />
     <item
         android:title=" "
         android:icon="@drawable/three_dots"
@@ -33,6 +34,12 @@
                 android:title="Help"
                 android:id="@+id/help"
                 android:icon="@drawable/baseline_help_outline_24"
+                app:showAsAction="never"/>
+
+            <item
+                android:title="Privacy Policy"
+                android:id="@+id/privacyPolicy"
+                android:icon="@drawable/policy"
                 app:showAsAction="never"/>
 
             <item

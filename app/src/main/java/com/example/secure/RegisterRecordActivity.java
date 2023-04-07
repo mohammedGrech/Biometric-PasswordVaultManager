@@ -110,7 +110,7 @@ public class RegisterRecordActivity extends AppCompatActivity {
                     Toast.makeText(RegisterRecordActivity.this, "Error creating this record", Toast.LENGTH_SHORT).show();
                     websiteModel = new WebsiteModel(-1, "error", "error", "error", "error", "error", "error");
                 }
-                Toast.makeText(RegisterRecordActivity.this, "" +websiteModel.toString(), Toast.LENGTH_SHORT).show();
+//                Toast.makeText(RegisterRecordActivity.this, "" +websiteModel.toString(), Toast.LENGTH_SHORT).show();
                 //Create database(if not created)
                 Database database = new Database(RegisterRecordActivity.this);
                 // add records from websiteModel to the database
@@ -118,6 +118,34 @@ public class RegisterRecordActivity extends AppCompatActivity {
             }
         }));
     }
+
+    // Handle back button
+    @Override
+    public void onBackPressed() {
+        Intent intentMain = new Intent(this, HomeActivity.class);
+        this.startActivity(intentMain);
+    }
+
+    // Destroy the application when the user exit
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        Intent intentMain = new Intent(this, MainActivity.class);
+        this.startActivity(intentMain);
+        finish();
+        System.exit(0);
+    }
+
+    // Reloading page to call onDestroy() method
+    @Override
+    public void onRestart()
+    {
+        super.onRestart();
+        finish();
+        startActivity(getIntent());
+    }
+
+
 
     //Display logo next to the spinner
     private void displayLogo(ImageView logo, String logoText) {

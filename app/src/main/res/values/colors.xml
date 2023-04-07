@@ -10,5 +10,6 @@
     <color name="dark_grey">#49454F</color>
     <color name="orange_pink">#E46962</color>
     <color name="titleTextColor">#F6F6F6</color>
+    <color name="light_grey">#E0E2EC</color>
 
 </resources>

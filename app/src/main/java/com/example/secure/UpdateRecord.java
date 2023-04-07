@@ -18,7 +18,9 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.ScrollView;
 import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
@@ -29,12 +31,16 @@ import java.util.regex.Pattern;
 public class UpdateRecord extends AppCompatActivity {
 
     Biometric biometric;
-    Button updateRecordButton;
+    private static Button updateRecordButton;
     EditText updateRecordName, updateRecordEmail, updateRecordPassword, updateRecordWebLink, updateRecordNote;
+    private static ScrollView scrollView;
     String name, email, password, url, note, webLogoText;
     Integer id;
     ImageView logo;
     Spinner spinner;
+    private static TextView updateTitle;
+
+    public int success = 0;
 
     //Password regex
     private static final Pattern PASSWORD_PATTERN =
@@ -53,7 +59,13 @@ public class UpdateRecord extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_update_record);
 
+        Integer success;
+
+        biometric = new Biometric();
+        biometric.biometricPromptAccessData(UpdateRecord.this);
+
         // Find button/inputs by ID
+        scrollView = findViewById(R.id.updateScrollView);
         updateRecordButton = findViewById(R.id.updateRecord);
         updateRecordName = findViewById(R.id.update_input_name);
         updateRecordEmail = findViewById(R.id.update_input_email);
@@ -61,6 +73,12 @@ public class UpdateRecord extends AppCompatActivity {
         updateRecordWebLink = findViewById(R.id.update_input_webLink);
         updateRecordNote = findViewById(R.id.update_input_Note);
         logo = findViewById(R.id.update_imageLogo);
+        updateTitle = findViewById(R.id.updateTitle);
+
+        //disable layouts by default (they will be enabled after biometric authentication succeed)
+        scrollView.setVisibility(View.INVISIBLE);
+        updateRecordButton.setVisibility(View.INVISIBLE);
+        updateTitle.setText("Authentication Required");
 
         //Spinner for logos
         spinner = (Spinner) findViewById(R.id.spinner_icon);
@@ -82,7 +100,7 @@ public class UpdateRecord extends AppCompatActivity {
 
                 //Display logo
                 displayLogo(logo, logoText);
-                Toast.makeText(getApplicationContext(), logoText + " 1", Toast.LENGTH_SHORT).show();
+//                Toast.makeText(getApplicationContext(), logoText + " 1", Toast.LENGTH_SHORT).show();
             }
             @Override
             public void onNothingSelected(AdapterView<?> parent) {
@@ -118,7 +136,6 @@ public class UpdateRecord extends AppCompatActivity {
             }
         });
 
-
         // customised toolbar
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -135,6 +152,17 @@ public class UpdateRecord extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+    }
+
+    public void result(boolean authenticate){
+        if (authenticate == true){
+            updateTitle.setText("Update Record");
+            scrollView.setVisibility(View.VISIBLE);
+            updateRecordButton.setVisibility(View.VISIBLE);
+            System.out.println("It is bloody working!");
+        }else {
+            System.out.println("Nope!");
+        }
     }
 
     //Validate Name
@@ -230,6 +258,32 @@ public class UpdateRecord extends AppCompatActivity {
             Toast.makeText(this, "No Data.", Toast.LENGTH_SHORT).show();
         }
     }
+
+    @Override
+    public void onBackPressed() {
+        Intent intentMain = new Intent(this, HomeActivity.class);
+        this.startActivity(intentMain);
+    }
+
+    // Destroy the application when the user exit
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        Intent intentMain = new Intent(this, MainActivity.class);
+        this.startActivity(intentMain);
+        finish();
+        System.exit(0);
+    }
+
+    // Reloading page to call onDestroy() method
+    @Override
+    public void onRestart()
+    {
+        super.onRestart();
+        finish();
+        startActivity(getIntent());
+    }
+
 
     //Display logo next to the spinner
     private void displayLogo(ImageView logo, String logoText) {
