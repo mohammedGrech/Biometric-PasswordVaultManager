@@ -97,7 +97,6 @@ public class Biometric {
         biometricPrompt.authenticate(promptInfo);
     }
 
-
     public void biometricPromptAccessData(Context context){
         //Create executor
         executor = ContextCompat.getMainExecutor(context);
@@ -120,7 +119,6 @@ public class Biometric {
 
                 UpdateRecord updateRecord = new UpdateRecord();
                 updateRecord.result(authenticate);
-
             }
             @Override
             public void onAuthenticationFailed() {

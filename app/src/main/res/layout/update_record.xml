@@ -8,7 +8,6 @@
     android:orientation="vertical"
     android:filterTouchesWhenObscured="true">
 
-
     <!--  Customised toolbar layout -->
     <include
         android:id="@+id/toolbar"
@@ -24,7 +23,6 @@
         android:text="Update Record"
         android:textColor="@color/white"
         android:textSize="28sp" />
-
 
     <ScrollView
         android:layout_width="match_parent"
@@ -68,7 +66,6 @@
                     android:hint="email"
                     android:inputType="textEmailAddress" />
             </com.google.android.material.textfield.TextInputLayout>
-
 
             <!--Password-->
             <com.google.android.material.textfield.TextInputLayout

@@ -1,9 +1,11 @@
 package com.example.secure;
 
+import android.Manifest;
 import android.annotation.SuppressLint;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
+import android.os.Build;
 import android.os.Bundle;
 
 import com.google.android.material.bottomsheet.BottomSheetDialog;
@@ -14,6 +16,8 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.os.Environment;
+import android.provider.Settings;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
@@ -44,6 +48,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.secure.databinding.ActivityHomeBinding;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -66,18 +71,35 @@ public class HomeActivity extends AppCompatActivity {
     EditText editText;
     String test = "";
 
+
     Button noFilter, youtube, facebook, whatsApp, pinterest, twitter, linkedin, github, gmail, instagram, spotify, outlook, netflix, reddit, amazon, amazon_prime;
 
 
     List<WebsiteModel> websiteList = new ArrayList<WebsiteModel>();
 
+    Database database;
+    Backup backup;
+
+    HomeActivity activity;
+
     @SuppressLint("ResourceAsColor")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        activity = this;
         super.onCreate(savedInstanceState);
 
         binding = ActivityHomeBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
+
+        if (Build.VERSION.SDK_INT >= 30){
+            if (!Environment.isExternalStorageManager()){
+                Intent getPermission = new Intent();
+                getPermission.setAction(Settings.ACTION_MANAGE_ALL_FILES_ACCESS_PERMISSION);
+                startActivity(getPermission);
+            }
+        }
+
+        backup = new Backup(this);
 
         // customised toolbar
         Toolbar toolbar = findViewById(R.id.toolbar);
@@ -133,11 +155,8 @@ public class HomeActivity extends AppCompatActivity {
 
 
 //        //Code to show all the website records
-        Database database = new Database(HomeActivity.this);
+        database = new Database(HomeActivity.this);
         List<WebsiteModel> websiteList = database.getAllWebsites();
-
-        // ArrayAdapter is needed to show the array in list view
-        Log.d(TAG, "onCreate: "+websiteList.toString());
 
         recyclerView = findViewById(R.id.recyclerViewWebsites);
 
@@ -287,11 +306,13 @@ public class HomeActivity extends AppCompatActivity {
         inflater.inflate(R.menu.option_menu,menu);
 
         MenuItem.OnActionExpandListener onActionExpandListener = new MenuItem.OnActionExpandListener() {
+        //Function to expand the search bar
         @Override
         public boolean onMenuItemActionExpand(@NonNull MenuItem item) {
+
             return true;
         }
-
+        //Function to collapse the search bar
         @Override
         public boolean onMenuItemActionCollapse(@NonNull MenuItem item) {
             return true;
@@ -309,6 +330,7 @@ public class HomeActivity extends AppCompatActivity {
 
                     @Override
                     public boolean onQueryTextChange(String newText) {
+                        String searchStr = newText;
                         mAdapter.getFilter().filter(newText);
                         return false;
                     }
@@ -323,19 +345,32 @@ public class HomeActivity extends AppCompatActivity {
         // Handle item selection
         switch (item.getItemId()) {
             case R.id.exit:
+                // Back to main page - user needs to login using biometric authentication
                 Intent intentMain = new Intent(this, MainActivity.class);
                 this.startActivity(intentMain);
                 finish();
                 System.exit(0);
                 return true;
             case R.id.filter:
+                //Show filter
                 scrollView.setVisibility(View.VISIBLE);
                 return true;
             case R.id.help:
+                //Open help page
                 Intent intent = new Intent(this,HelpActivity.class);
                 this.startActivity(intent);
                 return true;
+            case R.id.backup:
+                //Start the backup of the database
+                String outFileName = Environment.getExternalStorageDirectory() + File.separator + getResources().getString(R.string.app_name) + File.separator;
+                backup.performBackup(database, outFileName);
+                return true;
+            case R.id.importData:
+                // Importing of the database
+                backup.performRestore(database);
+                return true;
             case R.id.privacyPolicy:
+                // Open Privacy Policy
                 Intent intentPrivacy = new Intent(this,PrivacyPolicy.class);
                 this.startActivity(intentPrivacy);
                 return true;
@@ -344,4 +379,5 @@ public class HomeActivity extends AppCompatActivity {
         }
     }
 }
+
 
