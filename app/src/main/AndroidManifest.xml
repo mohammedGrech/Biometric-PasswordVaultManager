@@ -23,6 +23,9 @@
             android:name=".PrivacyPolicy"
             android:exported="false" />
         <activity
+            android:name=".PrivacyPolicy"
+            android:exported="false" />
+        <activity
             android:name=".UpdateRecord"
             android:exported="false" />
         <activity
