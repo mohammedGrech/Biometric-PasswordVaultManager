@@ -86,8 +86,6 @@ public class HomeActivity extends AppCompatActivity {
         // Change the title of the activity on the toolbar
         getSupportActionBar().setTitle("Home");
 
-
-
         //Bottom Sheet set up
         showSheet = findViewById(R.id.button_open_bottom_sheet);
         //manage bottom sheet dialog box
