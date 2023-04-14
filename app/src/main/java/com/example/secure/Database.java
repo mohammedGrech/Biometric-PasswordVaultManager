@@ -8,7 +8,6 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
-import android.database.sqlite.SQLiteStatement;
 import android.util.Log;
 import android.widget.Toast;
 
@@ -16,7 +15,6 @@ import androidx.annotation.Nullable;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.sql.Statement;
 
 public class Database extends SQLiteOpenHelper {
 
@@ -58,17 +56,16 @@ public class Database extends SQLiteOpenHelper {
     public boolean addRecord(WebsiteModel websiteModel){
 
         SQLiteDatabase db = this.getWritableDatabase();
-        String sql = "INSERT INTO " + TABLE_WEBSITES + " (" + WEB_NAME + ", " + WEB_URL + ", " + WEB_username + ", " + WEB_PASSWORD + ", " + WEB_NOTE + ", " + WEB_LOGO + ") VALUES (?, ?, ?, ?, ?, ?)";
-        SQLiteStatement statement = db.compileStatement(sql);
+        ContentValues cv = new ContentValues();
 
-        statement.bindString(1, websiteModel.getName());
-        statement.bindString(2, websiteModel.getUrl());
-        statement.bindString(3, websiteModel.getusername());
-        statement.bindString(4, websiteModel.getPassword());
-        statement.bindString(5, websiteModel.getNote());
-        statement.bindString(6, websiteModel.getWeb_logo());
+        cv.put(WEB_NAME, websiteModel.getName());
+        cv.put(WEB_URL, websiteModel.getUrl());
+        cv.put(WEB_username, websiteModel.getusername());
+        cv.put(WEB_PASSWORD, websiteModel.getPassword());
+        cv.put(WEB_NOTE, websiteModel.getNote());
+        cv.put(WEB_LOGO, websiteModel.getWeb_logo());
 
-        long insert = statement.executeInsert();
+        long insert = db.insert(TABLE_WEBSITES, null, cv);
         if (insert == -1){
             return false;
         }
@@ -113,36 +110,35 @@ public class Database extends SQLiteOpenHelper {
     /* Deletes a website record from the "Websites" table */
     public boolean deleteRecord(int webID){
         SQLiteDatabase db = this.getWritableDatabase();
-        String sql = "DELETE FROM " + TABLE_WEBSITES + " WHERE " + WEB_ID + " = ?";
-        SQLiteStatement statement = db.compileStatement(sql);
+        String query = "DELETE FROM " + TABLE_WEBSITES + " WHERE " + WEB_ID + " = " + webID;
 
-        statement.bindLong(1, webID);
+        Cursor cursor = db.rawQuery(query, null);
 
-        long delete = statement.executeUpdateDelete();
-        if (delete == -1){
-            return false;
-        }
-        else {
+        if(cursor.moveToFirst()){
+            cursor.close();
+            db.close();
             return true;
         }
-
+        else{
+            cursor.close();
+            db.close();
+            return false;
+        }
     }
 
     @SuppressLint("RestrictedApi")
     void updateData(Integer row_id, String name, String email, String password, String url, String note, String webLogo) {
         try {
             SQLiteDatabase db = this.getWritableDatabase();
-            String sql = "UPDATE " + TABLE_WEBSITES + " SET " + WEB_NAME + " = ?, " + WEB_URL + " = ?, " + WEB_username + " = ?, " + WEB_PASSWORD + " = ?, " + WEB_NOTE + " = ?, " + WEB_LOGO + " = ? WHERE " + WEB_ID + "=" + row_id;
-            SQLiteStatement statement = db.compileStatement(sql);
+            ContentValues cv = new ContentValues();
+            cv.put(WEB_NAME, name);
+            cv.put(WEB_URL, url);
+            cv.put(WEB_username, email);
+            cv.put(WEB_PASSWORD, password);
+            cv.put(WEB_NOTE, note);
+            cv.put(WEB_LOGO, webLogo);
 
-            statement.bindString(1, name);
-            statement.bindString(2, url);
-            statement.bindString(3, email);
-            statement.bindString(4, password);
-            statement.bindString(5, note);
-            statement.bindString(6, webLogo);
-
-            statement.executeUpdateDelete();
+            db.update(TABLE_WEBSITES, cv, WEB_ID + "=" + row_id, null);
         }catch (android.database.sqlite.SQLiteConstraintException exception){
             Log.d(TAG, "failure to update word,", exception);
         }
