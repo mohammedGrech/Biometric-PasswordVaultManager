@@ -52,6 +52,7 @@ public class MainActivity extends AppCompatActivity {
             // Call biometricPrompt function from Biometric class to display the authentication popup
             @Override
             public void onClick(View v) {
+
                 biometric.biometricPrompt(MainActivity.this);
             }
         });

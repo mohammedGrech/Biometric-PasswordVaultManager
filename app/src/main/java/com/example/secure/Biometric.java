@@ -1,6 +1,7 @@
 package com.example.secure;
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Build;
@@ -31,6 +32,8 @@ public class Biometric {
     private Executor executor;
     private BiometricPrompt biometricPrompt;
     public BiometricPrompt.PromptInfo promptInfo;
+
+    public boolean authenticate = false;
 
     // Below line denotes that the annotated element should only be called on the given API level or higher
     @RequiresApi(api = Build.VERSION_CODES.M)
@@ -93,4 +96,47 @@ public class Biometric {
                         BiometricManager.Authenticators.DEVICE_CREDENTIAL).build();
         biometricPrompt.authenticate(promptInfo);
     }
+
+    public void biometricPromptAccessData(Context context){
+        //Create executor
+        executor = ContextCompat.getMainExecutor(context);
+
+        //Create Biometric prompt and return the result (whether successful or not)
+        biometricPrompt=new BiometricPrompt((FragmentActivity)context, executor, new BiometricPrompt.AuthenticationCallback() {
+            @Override
+            public void onAuthenticationError(int errorCode, @NonNull CharSequence errString) {
+                super.onAuthenticationError(errorCode, errString);
+                Toast.makeText(context.getApplicationContext(), "Authentication cancelled", Toast.LENGTH_SHORT).show();
+                authenticate = false;
+                Intent intent = new Intent(context,HomeActivity.class);
+                context.startActivity(intent);
+            }
+            @Override
+            public void onAuthenticationSucceeded(@NonNull BiometricPrompt.AuthenticationResult result) {
+                super.onAuthenticationSucceeded(result);
+                Toast.makeText(context.getApplicationContext(), "Access granted", Toast.LENGTH_SHORT).show();
+                authenticate = true;
+
+                UpdateRecord updateRecord = new UpdateRecord();
+                updateRecord.result(authenticate);
+            }
+            @Override
+            public void onAuthenticationFailed() {
+                super.onAuthenticationFailed();
+                Toast.makeText(context.getApplicationContext(), "Authentication failed.", Toast.LENGTH_SHORT).show();
+                authenticate = false;
+                Intent intent = new Intent(context,HomeActivity.class);
+                context.startActivity(intent);
+            }
+        });
+
+        // Display the popup fingerprint/PIN to the user
+        // Note: BIOMETRIC_STRONG is for finger print while BIOMETRIC_WEAK includes Face recognition
+        promptInfo = new BiometricPrompt.PromptInfo.Builder()
+                .setTitle("Biometric login")
+                .setSubtitle("Authentication required to access data").setAllowedAuthenticators(BiometricManager.Authenticators.BIOMETRIC_STRONG |
+                        BiometricManager.Authenticators.DEVICE_CREDENTIAL).build();
+        biometricPrompt.authenticate(promptInfo);
+    }
+
 }

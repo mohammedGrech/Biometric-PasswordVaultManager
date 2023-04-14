@@ -5,50 +5,37 @@
     android:id="@+id/credentialLIst"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".HomeActivity">
+    tools:context=".HomeActivity"
+    android:filterTouchesWhenObscured="true">
 
-    <!--  Customised toolbar layout -->
+    <!--  Floating button  -->
+
     <include
         android:id="@+id/toolbar"
         layout="@layout/toolbar"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="24dp"
         app:layout_constraintBottom_toTopOf="@+id/recyclerViewWebsites"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0" />
 
-    <!--    <com.google.android.material.appbar.AppBarLayout-->
-    <!--        android:layout_width="match_parent"-->
-    <!--        android:layout_height="wrap_content"-->
-    <!--        android:theme="@style/Theme.Secure.NoActionBar">-->
-    <!--    </com.google.android.material.appbar.AppBarLayout>-->
 
-    <!--    <com.google.android.material.floatingactionbutton.FloatingActionButton-->
-    <!--        android:id="@+id/fab"-->
-    <!--        android:layout_width="wrap_content"-->
-    <!--        android:layout_height="wrap_content"-->
-    <!--        android:layout_gravity="bottom|end"-->
-    <!--        android:layout_marginEnd="@dimen/fab_margin"-->
-    <!--        android:layout_marginBottom="16dp"-->
-    <!--        android:visibility="invisible"-->
-    <!--        android:src="@drawable/baseline_add_24"-->
-    <!--        />-->
-
-    <!--  Floating button  -->
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/button_open_bottom_sheet"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="16dp"
-        android:layout_marginRight="16dp"
         android:layout_marginBottom="16dp"
         android:contentDescription="Add button"
         android:src="@drawable/baseline_add_24"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/recyclerViewWebsites" />
+        app:layout_constraintHorizontal_bias="0.954"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/recyclerViewWebsites"
+        app:layout_constraintVertical_bias="1.0" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerViewWebsites"
@@ -58,5 +45,261 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/toolbar" />
+        app:layout_constraintTop_toBottomOf="@+id/filter_hsv" />
+
+    <HorizontalScrollView
+        android:id="@+id/filter_hsv"
+        android:layout_width="match_parent"
+        android:layout_height="70dp"
+        android:layout_alignParentTop="true"
+        android:fillViewport="true"
+        android:measureAllChildren="false"
+        android:scrollbars="none"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.285"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.084">
+
+        <LinearLayout
+            android:id="@+id/innerLay"
+            android:layout_width="wrap_content"
+            android:layout_marginTop="3dp"
+            android:layout_height="75dp"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/filter_all"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="All"
+                app:layout_constraintBottom_toBottomOf="parent"
+                android:layout_marginLeft="16dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.055"
+                app:layout_constraintStart_toStartOf="parent"
+                android:background="@drawable/filter_buttons"
+                app:layout_constraintTop_toBottomOf="@+id/recyclerViewWebsites"
+                app:layout_constraintVertical_bias="0.59"/>
+
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/filter_facebook"
+                android:layout_width="wrap_content"
+                android:layout_height="50dp"
+                android:layout_marginLeft="16dp"
+                android:background="@drawable/filter_buttons"
+                android:text="Facebook"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.055"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/recyclerViewWebsites"
+                app:layout_constraintVertical_bias="0.59" />
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/filter_github"
+                android:layout_width="wrap_content"
+                android:layout_height="50dp"
+                android:layout_marginLeft="16dp"
+                android:background="@drawable/filter_buttons"
+                android:text="Github"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.055"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/recyclerViewWebsites"
+                app:layout_constraintVertical_bias="0.59" />
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/filter_amazon"
+                android:layout_width="wrap_content"
+                android:layout_height="50dp"
+                android:layout_marginLeft="16dp"
+                android:text="Amazon"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.055"
+                app:layout_constraintStart_toStartOf="parent"
+                android:background="@drawable/filter_buttons"
+                app:layout_constraintTop_toBottomOf="@+id/recyclerViewWebsites"
+                app:layout_constraintVertical_bias="0.59" />
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/filter_netflix"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="16dp"
+                android:text="Netflix"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.055"
+                app:layout_constraintStart_toStartOf="parent"
+                android:background="@drawable/filter_buttons"
+                app:layout_constraintTop_toBottomOf="@+id/recyclerViewWebsites"
+                app:layout_constraintVertical_bias="0.59"
+                />
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/filter_amazon_prime"
+                android:layout_width="wrap_content"
+                android:layout_height="50dp"
+                android:layout_marginLeft="16dp"
+                android:text="Amazon Prime"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.055"
+                app:layout_constraintStart_toStartOf="parent"
+                android:background="@drawable/filter_buttons"
+                app:layout_constraintTop_toBottomOf="@+id/recyclerViewWebsites"
+                app:layout_constraintVertical_bias="0.59" />
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/filter_whatsApp"
+                android:layout_width="wrap_content"
+                android:layout_height="50dp"
+                android:layout_marginLeft="16dp"
+                android:text="WhatsApp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.055"
+                app:layout_constraintStart_toStartOf="parent"
+                android:background="@drawable/filter_buttons"
+                app:layout_constraintTop_toBottomOf="@+id/recyclerViewWebsites"
+                app:layout_constraintVertical_bias="0.59" />
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/filter_twitter"
+                android:layout_width="wrap_content"
+                android:layout_height="50dp"
+                android:layout_marginLeft="16dp"
+                android:text="Twitter"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.055"
+                app:layout_constraintStart_toStartOf="parent"
+                android:background="@drawable/filter_buttons"
+                app:layout_constraintTop_toBottomOf="@+id/recyclerViewWebsites"
+                app:layout_constraintVertical_bias="0.59" />
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/filter_linkedin"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Linkedin"
+                app:layout_constraintBottom_toBottomOf="parent"
+                android:layout_marginLeft="16dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.055"
+                app:layout_constraintStart_toStartOf="parent"
+                android:background="@drawable/filter_buttons"
+                app:layout_constraintTop_toBottomOf="@+id/recyclerViewWebsites"
+                app:layout_constraintVertical_bias="0.59"/>
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/filter_gmail"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="16dp"
+                android:text="Gmail"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.055"
+                app:layout_constraintStart_toStartOf="parent"
+                android:background="@drawable/filter_buttons"
+                app:layout_constraintTop_toBottomOf="@+id/recyclerViewWebsites"
+                app:layout_constraintVertical_bias="0.59"
+                />
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/filter_instagram"
+                android:layout_width="wrap_content"
+                android:layout_height="50dp"
+                android:layout_marginLeft="16dp"
+                android:text="Instagram"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.055"
+                app:layout_constraintStart_toStartOf="parent"
+                android:background="@drawable/filter_buttons"
+                app:layout_constraintTop_toBottomOf="@+id/recyclerViewWebsites"
+                app:layout_constraintVertical_bias="0.59" />
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/filter_spotify"
+                android:layout_width="wrap_content"
+                android:layout_height="50dp"
+                android:layout_marginLeft="16dp"
+                android:text="Spotify"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.055"
+                app:layout_constraintStart_toStartOf="parent"
+                android:background="@drawable/filter_buttons"
+                app:layout_constraintTop_toBottomOf="@+id/recyclerViewWebsites"
+                app:layout_constraintVertical_bias="0.59" />
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/filter_outlook"
+                android:layout_width="wrap_content"
+                android:layout_height="50dp"
+                android:layout_marginLeft="16dp"
+                android:text="Outlook"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.055"
+                app:layout_constraintStart_toStartOf="parent"
+                android:background="@drawable/filter_buttons"
+                app:layout_constraintTop_toBottomOf="@+id/recyclerViewWebsites"
+                app:layout_constraintVertical_bias="0.59" />
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/filter_reddit"
+                android:layout_width="wrap_content"
+                android:layout_height="50dp"
+                android:layout_marginLeft="16dp"
+                android:text="Reddit"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.055"
+                app:layout_constraintStart_toStartOf="parent"
+                android:background="@drawable/filter_buttons"
+                app:layout_constraintTop_toBottomOf="@+id/recyclerViewWebsites"
+                app:layout_constraintVertical_bias="0.59" />
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/filter_pinterest"
+                android:layout_width="wrap_content"
+                android:layout_height="50dp"
+                android:layout_marginLeft="16dp"
+                android:text="Pinterest"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.055"
+                app:layout_constraintStart_toStartOf="parent"
+                android:background="@drawable/filter_buttons"
+                app:layout_constraintTop_toBottomOf="@+id/recyclerViewWebsites"
+                app:layout_constraintVertical_bias="0.59" />
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/filter_youtube"
+                android:layout_width="wrap_content"
+                android:layout_height="50dp"
+                android:layout_marginLeft="16dp"
+                android:text="Youtube"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.055"
+                app:layout_constraintStart_toStartOf="parent"
+                android:background="@drawable/filter_buttons"
+                app:layout_constraintTop_toBottomOf="@+id/recyclerViewWebsites"
+                app:layout_constraintVertical_bias="0.59" />
+
+        </LinearLayout>
+    </HorizontalScrollView>
+
+
 </androidx.constraintlayout.widget.ConstraintLayout>

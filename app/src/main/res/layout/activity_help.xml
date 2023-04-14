@@ -4,7 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".HelpActivity">
+    tools:context=".HelpActivity"
+    android:filterTouchesWhenObscured="true">
 
     <!--  Customised toolbar layout -->
     <include
@@ -49,7 +50,7 @@
         android:layout_margin="5dp"
         android:text="@string/How_to_enable_Biometric_fingerprint"
         android:textColor="@color/black"
-        android:textSize="13sp"
+        android:textSize="14sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.235"

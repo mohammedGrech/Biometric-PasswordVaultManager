@@ -6,7 +6,8 @@
     android:layout_height="match_parent"
     android:background="@color/dark_grey"
     android:orientation="vertical"
-    tools:context=".RegisterRecordActivity">
+    tools:context=".RegisterRecordActivity"
+    android:filterTouchesWhenObscured="true">
 
     <!--  Customised toolbar layout -->
     <include

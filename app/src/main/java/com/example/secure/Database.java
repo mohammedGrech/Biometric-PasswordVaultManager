@@ -8,13 +8,19 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.database.sqlite.SQLiteStatement;
 import android.util.Log;
 import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.OutputStream;
 import java.util.ArrayList;
 import java.util.List;
+import java.sql.Statement;
 
 public class Database extends SQLiteOpenHelper {
 
@@ -34,8 +40,12 @@ public class Database extends SQLiteOpenHelper {
     public static final String CODE_ID = "code_id";
     public static final String CODE_CODE = "code_code";
 
+    //context
+    private Context mContext;
+
     Database(@Nullable Context context) {
         super(context, "secure.db", null, 1);
+        this.mContext = context;
     }
 
     // this is called the first time a database is accessed.
@@ -46,7 +56,7 @@ public class Database extends SQLiteOpenHelper {
         db.execSQL("CREATE TABLE " + TABLE_RECOVERY_CODES + " (" + CODE_ID + " INTEGER PRIMARY KEY AUTOINCREMENT," + USER_ID + " INTEGER," + CODE_CODE + " TEXT)");
     }
 
-    //This is called if the database version changes.
+    // This is called if the database version changes.
     // It prevents previous users apps from breaking when you change the database design.
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
@@ -56,16 +66,17 @@ public class Database extends SQLiteOpenHelper {
     public boolean addRecord(WebsiteModel websiteModel){
 
         SQLiteDatabase db = this.getWritableDatabase();
-        ContentValues cv = new ContentValues();
+        String sql = "INSERT INTO " + TABLE_WEBSITES + " (" + WEB_NAME + ", " + WEB_URL + ", " + WEB_username + ", " + WEB_PASSWORD + ", " + WEB_NOTE + ", " + WEB_LOGO + ") VALUES (?, ?, ?, ?, ?, ?)";
+        SQLiteStatement statement = db.compileStatement(sql);
 
-        cv.put(WEB_NAME, websiteModel.getName());
-        cv.put(WEB_URL, websiteModel.getUrl());
-        cv.put(WEB_username, websiteModel.getusername());
-        cv.put(WEB_PASSWORD, websiteModel.getPassword());
-        cv.put(WEB_NOTE, websiteModel.getNote());
-        cv.put(WEB_LOGO, websiteModel.getWeb_logo());
+        statement.bindString(1, websiteModel.getName());
+        statement.bindString(2, websiteModel.getUrl());
+        statement.bindString(3, websiteModel.getusername());
+        statement.bindString(4, websiteModel.getPassword());
+        statement.bindString(5, websiteModel.getNote());
+        statement.bindString(6, websiteModel.getWeb_logo());
 
-        long insert = db.insert(TABLE_WEBSITES, null, cv);
+        long insert = statement.executeInsert();
         if (insert == -1){
             return false;
         }
@@ -110,37 +121,98 @@ public class Database extends SQLiteOpenHelper {
     /* Deletes a website record from the "Websites" table */
     public boolean deleteRecord(int webID){
         SQLiteDatabase db = this.getWritableDatabase();
-        String query = "DELETE FROM " + TABLE_WEBSITES + " WHERE " + WEB_ID + " = " + webID;
+        String sql = "DELETE FROM " + TABLE_WEBSITES + " WHERE " + WEB_ID + " = ?";
+        SQLiteStatement statement = db.compileStatement(sql);
 
-        Cursor cursor = db.rawQuery(query, null);
+        statement.bindLong(1, webID);
 
-        if(cursor.moveToFirst()){
-            cursor.close();
-            db.close();
-            return true;
-        }
-        else{
-            cursor.close();
-            db.close();
+        long delete = statement.executeUpdateDelete();
+        if (delete == -1){
             return false;
+        }
+        else {
+            return true;
         }
     }
 
+    // Update record
     @SuppressLint("RestrictedApi")
     void updateData(Integer row_id, String name, String email, String password, String url, String note, String webLogo) {
         try {
             SQLiteDatabase db = this.getWritableDatabase();
-            ContentValues cv = new ContentValues();
-            cv.put(WEB_NAME, name);
-            cv.put(WEB_URL, url);
-            cv.put(WEB_username, email);
-            cv.put(WEB_PASSWORD, password);
-            cv.put(WEB_NOTE, note);
-            cv.put(WEB_LOGO, webLogo);
+            String sql = "UPDATE " + TABLE_WEBSITES + " SET " + WEB_NAME + " = ?, " + WEB_URL + " = ?, " + WEB_username + " = ?, " + WEB_PASSWORD + " = ?, " + WEB_NOTE + " = ?, " + WEB_LOGO + " = ? WHERE " + WEB_ID + "=" + row_id;
+            SQLiteStatement statement = db.compileStatement(sql);
 
-            db.update(TABLE_WEBSITES, cv, WEB_ID + "=" + row_id, null);
+            statement.bindString(1, name);
+            statement.bindString(2, url);
+            statement.bindString(3, email);
+            statement.bindString(4, password);
+            statement.bindString(5, note);
+            statement.bindString(6, webLogo);
+
+            statement.executeUpdateDelete();
         }catch (android.database.sqlite.SQLiteConstraintException exception){
             Log.d(TAG, "failure to update word,", exception);
+        }
+    }
+
+    // Backup database
+    public void backup(String outFileName) {
+
+        //database path
+        final String inFileName = mContext.getDatabasePath("secure.db").toString();
+
+        try {
+
+            File dbFile = new File(inFileName);
+            FileInputStream fis = new FileInputStream(dbFile);
+
+            // Open the empty db as the output stream
+            OutputStream output = new FileOutputStream(outFileName);
+
+            // Transfer bytes from the input file to the output file
+            byte[] buffer = new byte[1024];
+            int length;
+            while ((length = fis.read(buffer)) > 0) {
+                output.write(buffer, 0, length);
+            }
+            // Close the streams
+            output.flush();
+            output.close();
+            fis.close();
+
+            Toast.makeText(mContext, "Backup Completed", Toast.LENGTH_SHORT).show();
+
+        } catch (Exception e) {
+            Toast.makeText(mContext, "Unable to backup database. Retry", Toast.LENGTH_SHORT).show();
+            e.printStackTrace();
+        }
+    }
+
+    // Import database
+    public void importDB(String inFileName) {
+
+        // final String outFileName = mContext.getDatabasePath(TABLE_WEBSITES).toString();
+        final String outFileName = mContext.getDatabasePath("secure.db").toString();
+        try {
+            File dbFile = new File(inFileName);
+            FileInputStream fis = new FileInputStream(dbFile);
+            // Open the empty db as the output stream
+            OutputStream output = new FileOutputStream(outFileName);
+            // Transfer bytes from the input file to the output file
+            byte[] buffer = new byte[1024];
+            int length;
+            while ((length = fis.read(buffer)) > 0) {
+                output.write(buffer, 0, length);
+            }
+            // Close the streams
+            output.flush();
+            output.close();
+            fis.close();
+            Toast.makeText(mContext, "Import Completed", Toast.LENGTH_SHORT).show();
+        } catch (Exception e) {
+            Toast.makeText(mContext, "Unable to import database. Retry", Toast.LENGTH_SHORT).show();
+            e.printStackTrace();
         }
     }
 
