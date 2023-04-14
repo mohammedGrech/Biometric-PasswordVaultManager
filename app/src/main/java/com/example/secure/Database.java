@@ -14,6 +14,10 @@ import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.OutputStream;
 import java.util.ArrayList;
 import java.util.List;
 import java.sql.Statement;
@@ -36,8 +40,12 @@ public class Database extends SQLiteOpenHelper {
     public static final String CODE_ID = "code_id";
     public static final String CODE_CODE = "code_code";
 
+    //context
+    private Context mContext;
+
     Database(@Nullable Context context) {
         super(context, "secure.db", null, 1);
+        this.mContext = context;
     }
 
     // this is called the first time a database is accessed.
@@ -48,7 +56,7 @@ public class Database extends SQLiteOpenHelper {
         db.execSQL("CREATE TABLE " + TABLE_RECOVERY_CODES + " (" + CODE_ID + " INTEGER PRIMARY KEY AUTOINCREMENT," + USER_ID + " INTEGER," + CODE_CODE + " TEXT)");
     }
 
-    //This is called if the database version changes.
+    // This is called if the database version changes.
     // It prevents previous users apps from breaking when you change the database design.
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
@@ -125,9 +133,9 @@ public class Database extends SQLiteOpenHelper {
         else {
             return true;
         }
-
     }
 
+    // Update record
     @SuppressLint("RestrictedApi")
     void updateData(Integer row_id, String name, String email, String password, String url, String note, String webLogo) {
         try {
@@ -145,6 +153,66 @@ public class Database extends SQLiteOpenHelper {
             statement.executeUpdateDelete();
         }catch (android.database.sqlite.SQLiteConstraintException exception){
             Log.d(TAG, "failure to update word,", exception);
+        }
+    }
+
+    // Backup database
+    public void backup(String outFileName) {
+
+        //database path
+        final String inFileName = mContext.getDatabasePath("secure.db").toString();
+
+        try {
+
+            File dbFile = new File(inFileName);
+            FileInputStream fis = new FileInputStream(dbFile);
+
+            // Open the empty db as the output stream
+            OutputStream output = new FileOutputStream(outFileName);
+
+            // Transfer bytes from the input file to the output file
+            byte[] buffer = new byte[1024];
+            int length;
+            while ((length = fis.read(buffer)) > 0) {
+                output.write(buffer, 0, length);
+            }
+            // Close the streams
+            output.flush();
+            output.close();
+            fis.close();
+
+            Toast.makeText(mContext, "Backup Completed", Toast.LENGTH_SHORT).show();
+
+        } catch (Exception e) {
+            Toast.makeText(mContext, "Unable to backup database. Retry", Toast.LENGTH_SHORT).show();
+            e.printStackTrace();
+        }
+    }
+
+    // Import database
+    public void importDB(String inFileName) {
+
+        // final String outFileName = mContext.getDatabasePath(TABLE_WEBSITES).toString();
+        final String outFileName = mContext.getDatabasePath("secure.db").toString();
+        try {
+            File dbFile = new File(inFileName);
+            FileInputStream fis = new FileInputStream(dbFile);
+            // Open the empty db as the output stream
+            OutputStream output = new FileOutputStream(outFileName);
+            // Transfer bytes from the input file to the output file
+            byte[] buffer = new byte[1024];
+            int length;
+            while ((length = fis.read(buffer)) > 0) {
+                output.write(buffer, 0, length);
+            }
+            // Close the streams
+            output.flush();
+            output.close();
+            fis.close();
+            Toast.makeText(mContext, "Import Completed", Toast.LENGTH_SHORT).show();
+        } catch (Exception e) {
+            Toast.makeText(mContext, "Unable to import database. Retry", Toast.LENGTH_SHORT).show();
+            e.printStackTrace();
         }
     }
 

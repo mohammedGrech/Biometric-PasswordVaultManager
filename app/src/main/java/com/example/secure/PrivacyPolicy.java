@@ -69,21 +69,33 @@ public class PrivacyPolicy extends AppCompatActivity {
     }
 
     // Functionality of Menu buttons
-    @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         // Handle item selection
         switch (item.getItemId()) {
             case R.id.exit:
-                Intent intent = new Intent(this,MainActivity.class);
-                this.startActivity(intent);
+                // Back to main page - user needs to login using biometric authentication
+                Intent intentMain = new Intent(this, MainActivity.class);
+                this.startActivity(intentMain);
                 finish();
                 System.exit(0);
                 return true;
+            case R.id.filter:
+                // Do not show anything - Filter is only available in the home page
+                return true;
             case R.id.help:
-                Intent intent2 = new Intent(this,HelpActivity.class);
-                this.startActivity(intent2);
-
-                Toast.makeText(this, "this is help", Toast.LENGTH_SHORT).show();
+                //Open help page
+                Intent intent = new Intent(this,HelpActivity.class);
+                this.startActivity(intent);
+                return true;
+            case R.id.backup:
+                Toast.makeText(this, "Please proceed with back up in the home page.", Toast.LENGTH_SHORT).show();
+                return true;
+            case R.id.importData:
+                Toast.makeText(this, "Please proceed with the import in the home page.", Toast.LENGTH_SHORT).show();
+                return true;
+            case R.id.privacyPolicy:
+                // Open Privacy Policy
+                Toast.makeText(this, "This is privacy policy page.", Toast.LENGTH_SHORT).show();
                 return true;
             default:
                 return super.onOptionsItemSelected(item);

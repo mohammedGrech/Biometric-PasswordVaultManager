@@ -2,16 +2,22 @@ package com.example.secure;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
-
 import android.content.Intent;
+import android.graphics.drawable.Icon;
 import android.os.Bundle;
+import android.os.Environment;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
 import android.widget.Toast;
 
+import java.io.File;
+
 public class HelpActivity extends AppCompatActivity {
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -23,6 +29,9 @@ public class HelpActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
         //Back button
         toolbar.setNavigationIcon(getDrawable(R.drawable.arrow_back));
+
+        invalidateOptionsMenu();
+
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -59,12 +68,14 @@ public class HelpActivity extends AppCompatActivity {
         startActivity(getIntent());
     }
 
-
     //Context Menu to appear in the toolbar
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.option_menu,menu);
+
+        MenuItem item = menu.findItem(R.id.search);
+        item.setVisible(false);
         return true;
     }
 
@@ -74,16 +85,26 @@ public class HelpActivity extends AppCompatActivity {
         // Handle item selection
         switch (item.getItemId()) {
             case R.id.exit:
-                Intent intent = new Intent(this,MainActivity.class);
-                this.startActivity(intent);
+                // Back to main page - user needs to login using biometric authentication
+                Intent intentMain = new Intent(this, MainActivity.class);
+                this.startActivity(intentMain);
                 finish();
                 System.exit(0);
                 return true;
+            case R.id.filter:
+                // Do not show anything - Filter is only available in the home page
+                return true;
             case R.id.help:
-                Intent intent2 = new Intent(this,HelpActivity.class);
-                this.startActivity(intent2);
+                Toast.makeText(this, "This is help page.", Toast.LENGTH_SHORT).show();
+                return true;
+            case R.id.backup:
+                Toast.makeText(this, "Please proceed with back up in the home page.", Toast.LENGTH_SHORT).show();
+                return true;
+            case R.id.importData:
+                Toast.makeText(this, "Please proceed with the import in the home page.", Toast.LENGTH_SHORT).show();
                 return true;
             case R.id.privacyPolicy:
+                // Open Privacy Policy
                 Intent intentPrivacy = new Intent(this,PrivacyPolicy.class);
                 this.startActivity(intentPrivacy);
                 return true;
