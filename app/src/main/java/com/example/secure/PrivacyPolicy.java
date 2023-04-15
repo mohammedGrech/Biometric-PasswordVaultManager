@@ -17,6 +17,10 @@ public class PrivacyPolicy extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_privacy_policy);
+
+        // Forcing to let the system know that contents of menu have changed, and menu should be redrawn.
+        invalidateOptionsMenu();
+
         // customised toolbar
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -65,6 +69,9 @@ public class PrivacyPolicy extends AppCompatActivity {
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.option_menu,menu);
+
+        MenuItem item = menu.findItem(R.id.search);
+        item.setVisible(false);
         return true;
     }
 

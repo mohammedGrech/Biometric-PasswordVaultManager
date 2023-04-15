@@ -55,6 +55,9 @@ public class RegisterRecordActivity extends AppCompatActivity {
         recordNote = findViewById(R.id.text_input_Note);
         addRecordButton = findViewById(R.id.addRecord);
 
+        // Forcing to let the system know that contents of menu have changed, and menu should be redrawn.
+        invalidateOptionsMenu();
+
         //Spinner for logos
         Spinner spinner = (Spinner) findViewById(R.id.spinner_icon);
         // Create an ArrayAdapter using the string array and a default spinner layout
@@ -272,7 +275,10 @@ public class RegisterRecordActivity extends AppCompatActivity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.option_menu, menu);
+        inflater.inflate(R.menu.option_menu,menu);
+
+        MenuItem item = menu.findItem(R.id.search);
+        item.setVisible(false);
         return true;
     }
 

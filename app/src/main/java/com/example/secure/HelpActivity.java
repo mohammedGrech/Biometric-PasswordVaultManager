@@ -30,6 +30,7 @@ public class HelpActivity extends AppCompatActivity {
         //Back button
         toolbar.setNavigationIcon(getDrawable(R.drawable.arrow_back));
 
+        // Forcing to let the system know that contents of menu have changed, and menu should be redrawn.
         invalidateOptionsMenu();
 
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {

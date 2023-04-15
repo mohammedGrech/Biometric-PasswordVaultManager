@@ -72,7 +72,7 @@ public class HomeActivity extends AppCompatActivity {
     String test = "";
 
 
-    Button noFilter, youtube, facebook, whatsApp, pinterest, twitter, linkedin, github, gmail, instagram, spotify, outlook, netflix, reddit, amazon, amazon_prime;
+    Button noFilter, youtube, facebook, whatsApp, pinterest, twitter, linkedin, github, gmail, instagram, spotify, outlook, netflix, reddit, amazon, amazon_prime, others;
 
 
     List<WebsiteModel> websiteList = new ArrayList<WebsiteModel>();
@@ -191,10 +191,16 @@ public class HomeActivity extends AppCompatActivity {
         instagram = findViewById(R.id.filter_instagram);
         spotify = findViewById(R.id.filter_spotify);
         outlook = findViewById(R.id.filter_outlook);
+        others = findViewById(R.id.filter_others);
 
         noFilter.setOnClickListener(v -> {
             mAdapter.getFilter().filter("");
             scrollView.setVisibility(View.GONE);
+        });
+
+        others.setOnClickListener(v -> {
+            String othersStr = (String) others.getText();
+            mAdapter.getFilter().filter("Logo");
         });
 
         facebook.setOnClickListener(v -> {

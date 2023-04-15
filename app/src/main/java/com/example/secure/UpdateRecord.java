@@ -59,6 +59,9 @@ public class UpdateRecord extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_update_record);
 
+        // Forcing to let the system know that contents of menu have changed, and menu should be redrawn.
+        invalidateOptionsMenu();
+
         Integer success;
 
         biometric = new Biometric();
@@ -347,7 +350,10 @@ public class UpdateRecord extends AppCompatActivity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.option_menu, menu);
+        inflater.inflate(R.menu.option_menu,menu);
+
+        MenuItem item = menu.findItem(R.id.search);
+        item.setVisible(false);
         return true;
     }
 

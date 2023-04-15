@@ -57,7 +57,7 @@ public class RecycleViewAdapter extends RecyclerView.Adapter<RecycleViewAdapter.
 
     @SuppressLint("SetTextI18n")
     @Override
-    public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull MyViewHolder holder, @SuppressLint("RecyclerView") int position) {
         // get the website details at the correct position
         final WebsiteModel webModel = websiteModels.get(position);
         // get position of the row
@@ -92,8 +92,15 @@ public class RecycleViewAdapter extends RecyclerView.Adapter<RecycleViewAdapter.
 
                                 // Notify user with their deletion
                                 Toast.makeText(context, webModel.getName() + " deleted.", Toast.LENGTH_SHORT).show();
-                                websiteModels.remove(webModel);
-                                notifyItemRemoved(index);
+                                //If the database has items
+                                if(websiteModels.size()!=0){
+                                    //remove database at this position
+                                    websiteModels.remove(position);
+                                    // inform the recycle view with the changes
+                                    notifyItemRemoved(position);
+                                    // inform the recycle view with the changes based on the range of data
+                                    notifyItemRangeChanged(position,websiteModels.size());
+                                }
                             }
                         })
                         // Record deletion will not succeed
@@ -193,10 +200,8 @@ public class RecycleViewAdapter extends RecyclerView.Adapter<RecycleViewAdapter.
                 holder.textLogo.setVisibility(View.GONE);
                 break;
             default:
-                char firstLetter = webName.charAt(0);
-                char secondLetter = webName.charAt(webName.length()-1);
-                String textCombination = firstLetter +""+ secondLetter;
-                holder.textLogo.setText(textCombination.toUpperCase());
+                Glide.with(this.context).load(R.drawable.account_24).into(holder.recordLogo);
+                holder.textLogo.setVisibility(View.GONE);
                 break;
         }
     }
@@ -219,7 +224,7 @@ public class RecycleViewAdapter extends RecyclerView.Adapter<RecycleViewAdapter.
                     String searchStr = constraint.toString().toLowerCase();
                     List<WebsiteModel> filterWebsiteModels = new ArrayList<>();
                     for (WebsiteModel websiteModel: getWebsiteModelsFilter){
-                        if (websiteModel.getName().toLowerCase().contains(searchStr)){
+                        if (websiteModel.getName().toLowerCase().contains(searchStr) || websiteModel.getWeb_logo().toLowerCase().contains(searchStr)){
                             filterWebsiteModels.add(websiteModel);
                         }
                     }
