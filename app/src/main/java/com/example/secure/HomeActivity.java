@@ -5,6 +5,7 @@ import android.annotation.SuppressLint;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
+import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.os.Bundle;
 
@@ -61,9 +62,7 @@ public class HomeActivity extends AppCompatActivity {
     private FloatingActionButton showSheet;
     private BottomSheetDialog bottomSheetDialog;
     private ImageView closeApp;
-
     private HorizontalScrollView scrollView;
-
     private RecyclerView recyclerView;
     private RecycleViewAdapter mAdapter;
     private RecyclerView.LayoutManager layoutManager;
@@ -72,7 +71,7 @@ public class HomeActivity extends AppCompatActivity {
     String test = "";
 
 
-    Button noFilter, youtube, facebook, whatsApp, pinterest, twitter, linkedin, github, gmail, instagram, spotify, outlook, netflix, reddit, amazon, amazon_prime, others;
+    public Button noFilter, youtube, facebook, whatsApp, pinterest, twitter, linkedin, github, gmail, instagram, spotify, outlook, netflix, reddit, amazon, amazon_prime, others;
 
 
     List<WebsiteModel> websiteList = new ArrayList<WebsiteModel>();
@@ -196,88 +195,168 @@ public class HomeActivity extends AppCompatActivity {
         noFilter.setOnClickListener(v -> {
             mAdapter.getFilter().filter("");
             scrollView.setVisibility(View.GONE);
+            resetBackground();
         });
 
+        //This function filter by any credentials that has no logo
         others.setOnClickListener(v -> {
-            String othersStr = (String) others.getText();
-            mAdapter.getFilter().filter("Logo");
+            mAdapter.getSearch().filter("logo");
+            resetBackground();
+            changeBackground(others);
         });
 
+        //The below functions filter by the name of websites
         facebook.setOnClickListener(v -> {
             String facebookStr = (String) facebook.getText();
             mAdapter.getFilter().filter(facebookStr);
+            resetBackground();
+            changeBackground(facebook);
         });
 
         netflix.setOnClickListener(v -> {
             String netflixStr = (String) netflix.getText();
             mAdapter.getFilter().filter(netflixStr);
+            resetBackground();
+            changeBackground(netflix);
         });
 
         amazon.setOnClickListener(v -> {
             String amazonStr = (String) amazon.getText();
             mAdapter.getFilter().filter(amazonStr);
+            resetBackground();
+            changeBackground(amazon);
         });
 
         github.setOnClickListener(v -> {
             String githubStr = (String) github.getText();
             mAdapter.getFilter().filter(githubStr);
+            resetBackground();
+            changeBackground(github);
         });
 
         reddit.setOnClickListener(v -> {
             String redditStr = (String) reddit.getText();
             mAdapter.getFilter().filter(redditStr);
+            resetBackground();
+            changeBackground(reddit);
         });
 
         amazon_prime.setOnClickListener(v -> {
             String amazon_primeStr = (String) amazon_prime.getText();
             mAdapter.getFilter().filter(amazon_primeStr);
+            resetBackground();
+            changeBackground(amazon_prime);
         });
 
         youtube.setOnClickListener(v -> {
             String youtubeStr = (String) youtube.getText();
             mAdapter.getFilter().filter(youtubeStr);
+            resetBackground();
+            changeBackground(youtube);
         });
 
         whatsApp.setOnClickListener(v -> {
             String whatsAppStr = (String) whatsApp.getText();
             mAdapter.getFilter().filter(whatsAppStr);
+            resetBackground();
+            changeBackground(whatsApp);
         });
 
         pinterest.setOnClickListener(v -> {
             String pinterestStr = (String) pinterest.getText();
             mAdapter.getFilter().filter(pinterestStr);
+            resetBackground();
+            changeBackground(pinterest);
         });
 
         twitter.setOnClickListener(v -> {
             String twitterStr = (String) twitter.getText();
             mAdapter.getFilter().filter(twitterStr);
+            resetBackground();
+            changeBackground(twitter);
         });
 
         linkedin.setOnClickListener(v -> {
             String linkedinStr = (String) linkedin.getText();
             mAdapter.getFilter().filter(linkedinStr);
+            resetBackground();
+            changeBackground(linkedin);
         });
 
         gmail.setOnClickListener(v -> {
             String gmailStr = (String) gmail.getText();
             mAdapter.getFilter().filter(gmailStr);
+            resetBackground();
+            changeBackground(gmail);
         });
 
         instagram.setOnClickListener(v -> {
             String instagramStr = (String) instagram.getText();
             mAdapter.getFilter().filter(instagramStr);
+            resetBackground();
+            changeBackground(instagram);
         });
 
         spotify.setOnClickListener(v -> {
             String spotifyStr = (String) spotify.getText();
             mAdapter.getFilter().filter(spotifyStr);
+            resetBackground();
+            changeBackground(spotify);
         });
 
         outlook.setOnClickListener(v -> {
             String outlookStr = (String) outlook.getText();
             mAdapter.getFilter().filter(outlookStr);
+            resetBackground();
+            changeBackground(outlook);
         });
+
+
     }
+
+    public void changeBackground(Button button){
+        button.setBackground(getDrawable(R.drawable.filter_button_selected));
+        button.setTextColor(Color.WHITE);
+    }
+
+    @SuppressLint("UseCompatLoadingForDrawables")
+    public void resetBackground(){
+        facebook.setBackground(getDrawable(R.drawable.filter_buttons));
+        netflix.setBackground(getDrawable(R.drawable.filter_buttons));
+        amazon.setBackground(getDrawable(R.drawable.filter_buttons));
+        github.setBackground(getDrawable(R.drawable.filter_buttons));
+        reddit.setBackground(getDrawable(R.drawable.filter_buttons));
+        amazon_prime.setBackground(getDrawable(R.drawable.filter_buttons));
+        youtube.setBackground(getDrawable(R.drawable.filter_buttons));
+        whatsApp.setBackground(getDrawable(R.drawable.filter_buttons));
+        pinterest.setBackground(getDrawable(R.drawable.filter_buttons));
+        twitter.setBackground(getDrawable(R.drawable.filter_buttons));
+        linkedin.setBackground(getDrawable(R.drawable.filter_buttons));
+        gmail.setBackground(getDrawable(R.drawable.filter_buttons));
+        instagram.setBackground(getDrawable(R.drawable.filter_buttons));
+        spotify.setBackground(getDrawable(R.drawable.filter_buttons));
+        outlook.setBackground(getDrawable(R.drawable.filter_buttons));
+        others.setBackground(getDrawable(R.drawable.filter_buttons));
+
+        facebook.setTextColor(Color.BLACK);
+        netflix.setTextColor(Color.BLACK);
+        amazon.setTextColor(Color.BLACK);
+        github.setTextColor(Color.BLACK);
+        reddit.setTextColor(Color.BLACK);
+        amazon_prime.setTextColor(Color.BLACK);
+        youtube.setTextColor(Color.BLACK);
+        whatsApp.setTextColor(Color.BLACK);
+        pinterest.setTextColor(Color.BLACK);
+        twitter.setTextColor(Color.BLACK);
+        linkedin.setTextColor(Color.BLACK);
+        gmail.setTextColor(Color.BLACK);
+        instagram.setTextColor(Color.BLACK);
+        spotify.setTextColor(Color.BLACK);
+        outlook.setTextColor(Color.BLACK);
+        others.setTextColor(Color.BLACK);
+    }
+
+
 
     // Handle back button
     @Override

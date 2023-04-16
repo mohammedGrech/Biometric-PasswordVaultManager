@@ -36,10 +36,14 @@
     <!--  Login button  -->
     <Button
     android:id="@+id/login_btn"
-    android:layout_width="100dp"
-    android:layout_height="58dp"
-        android:layout_marginTop="510dp"
+    android:layout_width="302dp"
+    android:layout_height="48dp"
+    android:layout_marginTop="510dp"
     android:backgroundTint="@color/dark_grey"
+    android:background="@drawable/login_shape"
     android:layout_centerHorizontal="true"
-    android:text="Login" />
+    android:text="Login"
+    android:textAllCaps="false"
+    android:paddingHorizontal="24dp"/>
+
 </RelativeLayout>

@@ -8,8 +8,11 @@
     <color name="pure_white">#FFF</color>
     <color name="white">#F6F6F6</color>
     <color name="dark_grey">#49454F</color>
+    <color name="container_grey">#FFFBFF</color>
     <color name="orange_pink">#E46962</color>
     <color name="titleTextColor">#F6F6F6</color>
     <color name="light_grey">#E0E2EC</color>
+    <color name="outline">#7A757F</color>
+
 
 </resources>

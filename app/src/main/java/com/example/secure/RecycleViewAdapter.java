@@ -211,6 +211,38 @@ public class RecycleViewAdapter extends RecyclerView.Adapter<RecycleViewAdapter.
         return websiteModels.size();
     }
 
+
+    public Filter getSearch() {
+        Filter filter = new Filter() {
+            @Override
+            protected FilterResults performFiltering(CharSequence constraint) {
+                FilterResults filterResults = new FilterResults();
+                if(constraint == null || constraint.length() == 0){
+                    filterResults.values = getWebsiteModelsFilter;
+                    filterResults.count = getWebsiteModelsFilter.size();
+                }else{
+                    String searchStr = constraint.toString().toLowerCase();
+                    List<WebsiteModel> filterWebsiteModels = new ArrayList<>();
+                    for (WebsiteModel websiteModel: getWebsiteModelsFilter){
+                        if (websiteModel.getWeb_logo().toLowerCase().contains(searchStr)){
+                            filterWebsiteModels.add(websiteModel);
+                        }
+                    }
+                    filterResults.values = filterWebsiteModels;
+                    filterResults.count = filterWebsiteModels.size();
+                }
+                return filterResults;
+            }
+
+            @Override
+            protected void publishResults(CharSequence constraint, FilterResults results) {
+                websiteModels = (List<WebsiteModel>) results.values;
+                notifyDataSetChanged();
+            }
+        };
+        return filter;
+    }
+
     @Override
     public Filter getFilter() {
         Filter filter = new Filter() {
@@ -224,7 +256,7 @@ public class RecycleViewAdapter extends RecyclerView.Adapter<RecycleViewAdapter.
                     String searchStr = constraint.toString().toLowerCase();
                     List<WebsiteModel> filterWebsiteModels = new ArrayList<>();
                     for (WebsiteModel websiteModel: getWebsiteModelsFilter){
-                        if (websiteModel.getName().toLowerCase().contains(searchStr) || websiteModel.getWeb_logo().toLowerCase().contains(searchStr)){
+                        if (websiteModel.getName().toLowerCase().contains(searchStr)){
                             filterWebsiteModels.add(websiteModel);
                         }
                     }

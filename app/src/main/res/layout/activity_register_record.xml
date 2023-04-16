@@ -4,7 +4,6 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/dark_grey"
     android:orientation="vertical"
     tools:context=".RegisterRecordActivity"
     android:filterTouchesWhenObscured="true">
@@ -19,11 +18,11 @@
         android:id="@+id/textrecordContainer"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:gravity="center_horizontal"
         android:layout_marginTop="15dp"
-        android:textSize="28sp"
-        android:textColor="@color/white"
-        android:text="New Record" />
+        android:gravity="center_horizontal"
+        android:text="New Record"
+        android:textColor="@color/black"
+        android:textSize="28sp" />
 
 
     <ScrollView
@@ -152,8 +151,6 @@
                     android:hint="Note"
                     android:inputType="textLongMessage" />
             </com.google.android.material.textfield.TextInputLayout>
-
-
         </LinearLayout>
     </ScrollView>
 
@@ -162,11 +159,11 @@
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/addRecord"
         android:layout_width="350dp"
-        android:layout_height="60dp"
+        android:layout_height="48dp"
         android:onClick="confirmInput"
         android:layout_gravity="center_horizontal"
-        android:text="Add"
-        android:textSize="20sp"
+        android:text="Add record"
+        android:textAllCaps="false"
         android:shadowColor="@color/white"
         android:background="@drawable/custom_button"
         android:layout_marginTop="10dp"

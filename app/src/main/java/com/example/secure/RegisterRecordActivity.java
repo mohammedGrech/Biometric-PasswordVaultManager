@@ -55,6 +55,8 @@ public class RegisterRecordActivity extends AppCompatActivity {
         recordNote = findViewById(R.id.text_input_Note);
         addRecordButton = findViewById(R.id.addRecord);
 
+//        addRecordButton.setTextColor(getResources().getColor(R.color.dark_grey));
+
         // Forcing to let the system know that contents of menu have changed, and menu should be redrawn.
         invalidateOptionsMenu();
 

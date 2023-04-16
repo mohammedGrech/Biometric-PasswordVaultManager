@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/dark_grey"
+
     android:orientation="vertical"
     tools:context=".UpdateRecord"
     android:filterTouchesWhenObscured="true">
@@ -19,11 +19,11 @@
         android:id="@+id/updateTitle"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:gravity="center_horizontal"
         android:layout_marginTop="15dp"
-        android:textSize="28sp"
-        android:textColor="@color/white"
-        android:text="Update Record" />
+        android:gravity="center_horizontal"
+        android:text="Update Record"
+        android:textColor="@color/black"
+        android:textSize="28sp" />
 
 
     <ScrollView
@@ -51,6 +51,7 @@
                     android:layout_height="wrap_content"
                     android:background="@drawable/customer_input"
                     android:hint="Name"
+
                     android:inputType="text" />
             </com.google.android.material.textfield.TextInputLayout>
 
@@ -164,11 +165,11 @@
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/updateRecord"
         android:layout_width="350dp"
-        android:layout_height="60dp"
+        android:layout_height="48dp"
         android:onClick="confirmInput"
         android:layout_gravity="center_horizontal"
-        android:text="Update"
-        android:textSize="20sp"
+        android:text="Update record"
+        android:textAllCaps="false"
         android:shadowColor="@color/white"
         android:background="@drawable/custom_button"
         android:layout_marginTop="10dp"
