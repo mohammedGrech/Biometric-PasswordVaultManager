@@ -20,6 +20,7 @@ import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 
+import java.util.List;
 import java.util.regex.Pattern;
 
 
@@ -111,15 +112,18 @@ public class RegisterRecordActivity extends AppCompatActivity {
                     //Feeding the full constructor(websiteModel) with user's input
                     websiteModel = new WebsiteModel(-1, recordName.getText().toString(), recordWebLink.getText().toString(),
                             recordEmail.getText().toString(), recordPassword.getText().toString(), recordNote.getText().toString(), recordLogo);
+
+                    Toast.makeText(RegisterRecordActivity.this, "A new record created.", Toast.LENGTH_SHORT).show();
+                    Intent intent = new Intent(v.getContext(),HomeActivity.class);
+                    startActivity(intent);
+                    //Create database(if not created)
+                    Database database = new Database(RegisterRecordActivity.this);
+                    // add records from websiteModel to the database
+                    boolean success = database.addRecord(websiteModel);
                 } catch (Exception e) {
                     Toast.makeText(RegisterRecordActivity.this, "Error creating this record", Toast.LENGTH_SHORT).show();
                     websiteModel = new WebsiteModel(-1, "error", "error", "error", "error", "error", "error");
                 }
-//                Toast.makeText(RegisterRecordActivity.this, "" +websiteModel.toString(), Toast.LENGTH_SHORT).show();
-                //Create database(if not created)
-                Database database = new Database(RegisterRecordActivity.this);
-                // add records from websiteModel to the database
-                boolean success = database.addRecord(websiteModel);
             }
         }));
     }
@@ -149,8 +153,6 @@ public class RegisterRecordActivity extends AppCompatActivity {
         finish();
         startActivity(getIntent());
     }
-
-
 
     //Display logo next to the spinner
     private void displayLogo(ImageView logo, String logoText) {

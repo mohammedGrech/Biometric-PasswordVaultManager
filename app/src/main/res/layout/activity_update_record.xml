@@ -4,9 +4,9 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-
     android:orientation="vertical"
     tools:context=".UpdateRecord"
+    android:background="@color/white"
     android:filterTouchesWhenObscured="true">
 
     <!--  Customised toolbar layout -->
@@ -38,7 +38,6 @@
 
             <!--name-->
             <com.google.android.material.textfield.TextInputLayout
-
                 android:layout_width="350dp"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
@@ -68,7 +67,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="15dp"
                     android:background="@drawable/customer_input"
-                    android:hint="email"
+                    android:hint="Email"
                     android:inputType="textEmailAddress" />
             </com.google.android.material.textfield.TextInputLayout>
 

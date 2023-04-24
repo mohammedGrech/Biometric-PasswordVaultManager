@@ -135,6 +135,8 @@ public class UpdateRecord extends AppCompatActivity {
                 // then update data
                 database.updateData(id, name, email, password, url, note, webLogoText);
                 Toast.makeText(UpdateRecord.this, "Record updated", Toast.LENGTH_SHORT).show();
+                Intent intent = new Intent(v.getContext(),HomeActivity.class);
+                startActivity(intent);
 
             }
         });

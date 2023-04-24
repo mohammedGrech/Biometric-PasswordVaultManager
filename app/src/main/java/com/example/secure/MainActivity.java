@@ -99,4 +99,12 @@ public class MainActivity extends AppCompatActivity {
         AlertDialog alert = builder.create();
         alert.show();
     }
+
+    // Handle back button
+    @Override
+    public void onBackPressed() {
+        finish();
+        System.exit(0);
+
+    }
 }

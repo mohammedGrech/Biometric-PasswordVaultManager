@@ -3,35 +3,37 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <uses-permission android:name="android.permission.USE_BIOMETRIC" />
-    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
-    <uses-permission android:name="android.permission.MANAGE_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.MANAGE_EXTERNAL_STORAGE" />
 
     <application
         package="com.owasp.Secure"
-        android:allowBackup="true"
+        android:allowBackup="false"
         android:dataExtractionRules="@xml/data_extraction_rules"
         android:fullBackupContent="@xml/backup_rules"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
+        android:preserveLegacyExternalStorage="true"
+        android:requestLegacyExternalStorage="true"
         android:supportsRtl="true"
         android:theme="@style/Theme.Secure"
-        tools:targetApi="31"
-        android:preserveLegacyExternalStorage="true"
-        android:requestLegacyExternalStorage="true">
+        tools:targetApi="31">
         <activity
-            android:name=".PrivacyPolicy"
+            android:name=".GeneratePassword"
             android:exported="false" />
         <activity
             android:name=".PrivacyPolicy"
             android:exported="false" />
         <activity
             android:name=".UpdateRecord"
-            android:exported="false" />
+            android:exported="false"
+            android:windowSoftInputMode="adjustPan" />
         <activity
             android:name=".RegisterRecordActivity"
             android:exported="false"
-            android:label="Registration" />
+            android:label="Registration"
+            android:windowSoftInputMode="adjustPan" />
         <activity
             android:name=".HelpActivity"
             android:exported="false" />

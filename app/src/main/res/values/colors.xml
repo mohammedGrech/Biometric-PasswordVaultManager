@@ -13,6 +13,9 @@
     <color name="titleTextColor">#F6F6F6</color>
     <color name="light_grey">#E0E2EC</color>
     <color name="outline">#7A757F</color>
+    <color name="seek_bar_background">#DDB1AE</color>
+    <color name="seek_bar_progress">#E46962</color>
+    <color name="seek_bar_secondary_progress">#3399CC</color>
 
 
 </resources>

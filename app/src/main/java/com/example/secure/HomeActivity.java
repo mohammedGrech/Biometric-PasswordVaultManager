@@ -131,7 +131,8 @@ public class HomeActivity extends AppCompatActivity {
                 sheetView.findViewById(R.id.generatePassword).setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        Toast.makeText(HomeActivity.this, "Generate link selected", Toast.LENGTH_SHORT).show();
+                        Intent intent = new Intent(v.getContext(), GeneratePassword.class);
+                        startActivity(intent);
                         bottomSheetDialog.dismiss();
                     }
                 });
@@ -142,7 +143,6 @@ public class HomeActivity extends AppCompatActivity {
                     public void onClick(View v) {
                         Intent intent = new Intent(v.getContext(), RegisterRecordActivity.class);
                         startActivity(intent);
-                        Toast.makeText(HomeActivity.this, "Create record selected", Toast.LENGTH_SHORT).show();
                         bottomSheetDialog.dismiss();
                     }
                 });
@@ -310,8 +310,6 @@ public class HomeActivity extends AppCompatActivity {
             resetBackground();
             changeBackground(outlook);
         });
-
-
     }
 
     public void changeBackground(Button button){

@@ -35,7 +35,6 @@ public class PrivacyPolicy extends AppCompatActivity {
         });
         // Change the title of the activity on the toolbar
         getSupportActionBar().setTitle("Privacy Policy");
-
     }
 
     @Override
