@@ -2,7 +2,6 @@ package com.example.secure;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
@@ -37,6 +36,7 @@ public class PrivacyPolicy extends AppCompatActivity {
         getSupportActionBar().setTitle("Privacy Policy");
     }
 
+    // Handle back button
     @Override
     public void onBackPressed() {
         Intent intentMain = new Intent(this, HomeActivity.class);
@@ -61,7 +61,6 @@ public class PrivacyPolicy extends AppCompatActivity {
         finish();
         startActivity(getIntent());
     }
-
 
     //Context Menu to appear in the toolbar
     @Override

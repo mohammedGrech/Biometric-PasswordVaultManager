@@ -1,13 +1,12 @@
 package com.example.secure;
+
 import android.app.AlertDialog;
-import android.content.DialogInterface;
 import android.os.Environment;
 import android.text.InputType;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.Toast;
 import java.io.File;
-import com.example.secure.Permissions;
 
 public class Backup {
     private HomeActivity activity;
@@ -55,7 +54,7 @@ public class Backup {
 
     // Import the database
     public void performRestore(final Database db) {
-
+        // verifying the read/write access
         Permissions.verifyStoragePermissions(activity);
         // The folder where the database is saved
         File folder = new File(Environment.getExternalStorageDirectory() + File.separator + activity.getResources().getString(R.string.app_name));

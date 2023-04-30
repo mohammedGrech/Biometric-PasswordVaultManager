@@ -1,32 +1,28 @@
 package com.example.secure;
 
-import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.biometric.BiometricManager;
 import androidx.biometric.BiometricPrompt;
-import androidx.core.content.ContextCompat;
-
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Handler;
 import android.view.View;
 import android.widget.Button;
-import android.widget.TextView;
 import android.widget.Toast;
 import androidx.appcompat.widget.Toolbar;
 
-import java.util.concurrent.Executor;
-
 public class MainActivity extends AppCompatActivity {
 
+    // Importing biometric class
     Biometric biometric;
     Button login_btn;
     public BiometricPrompt biometricPrompt;
     public BiometricPrompt.PromptInfo promptInfo;
+    private boolean isBackPressedOnce = false;
 
     // Below line denotes that the annotated element should only be called on the given API level or higher
     @RequiresApi(api = Build.VERSION_CODES.M)
@@ -100,11 +96,27 @@ public class MainActivity extends AppCompatActivity {
         alert.show();
     }
 
-    // Handle back button
+    // Handle back button to exit the application upon pressing it twice
     @Override
     public void onBackPressed() {
-        finish();
-        System.exit(0);
+        //check if back button was pressed and exit the app upon the second press
+        if(isBackPressedOnce){
+            Intent homeIntent = new Intent(Intent.ACTION_MAIN);
+            homeIntent.addCategory( Intent.CATEGORY_HOME );
+            homeIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+            startActivity(homeIntent);
+            return;
+        }
+        // back button pressed
+        isBackPressedOnce = true;
 
+        // Back-button-pressed will reset after 2 seconds
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                isBackPressedOnce = false;
+            }
+        }, 2000);
+        Toast.makeText(this, "Press again to exit.", Toast.LENGTH_SHORT).show();
     }
 }

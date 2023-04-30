@@ -1,10 +1,8 @@
 package com.example.secure;
 
 import static android.content.ContentValues.TAG;
-
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
-
 import android.app.AlertDialog;
 import android.content.ClipData;
 import android.content.ClipboardManager;
@@ -23,7 +21,6 @@ import android.widget.CheckBox;
 import android.widget.SeekBar;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import java.util.Random;
 
 public class GeneratePassword extends AppCompatActivity {
@@ -40,16 +37,19 @@ public class GeneratePassword extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_generate_password);
+
         // customised toolbar
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
+        // finding elements by ID
         upperCase = findViewById(R.id.upperCase);
         lowerCase = findViewById(R.id.lowerCase);
         number = findViewById(R.id.number);
         symbols = findViewById(R.id.specialCharacter);
         generatePassword = findViewById(R.id.generatePassword);
         stringPasswordSize = (TextView) findViewById(R.id.progress);
+        seekBar = findViewById(R.id.seekBar);
 
         //Back button
         toolbar.setNavigationIcon(getDrawable(R.drawable.arrow_back));
@@ -57,6 +57,7 @@ public class GeneratePassword extends AppCompatActivity {
         // Forcing to let the system know that contents of menu have changed, and menu should be redrawn.
         invalidateOptionsMenu();
 
+        // Handle back button in the toolbar
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -64,18 +65,22 @@ public class GeneratePassword extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+
         // Change the title of the activity on the toolbar
         getSupportActionBar().setTitle("Generate Password");
 
-        seekBar = findViewById(R.id.seekBar);
+        // Set the minimum seekbar to 4 and maximum to 50
         if (seekBar != null) {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
                 seekBar.setMin(4);
             }
             seekBar.setMax(50);
         }
+
+        // Seekbar to display and get the range of password length
         seekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
 
+            // This function handles any changes when the user modify the range.
             @Override
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
                 stringPasswordSize.setText("" + progress);
@@ -98,16 +103,18 @@ public class GeneratePassword extends AppCompatActivity {
 
             @Override
             public void onClick(View v) {
-
+                //  Ensure one of the below conditions are checked
                 if(!upperCase.isChecked() && !lowerCase.isChecked() && !number.isChecked() && !symbols.isChecked()){
                     Toast.makeText(GeneratePassword.this, "At least one of the above checkboxes must be ticked.", Toast.LENGTH_SHORT).show();
                 }
                 else {
+                    //generate password and pass it to a string
                     passwordString = generateRandomPassword(passwordRange, upperCase.isChecked(), lowerCase.isChecked(), number.isChecked(),symbols.isChecked());
                     new AlertDialog.Builder(v.getContext())
                             .setTitle("Generated password")
                             .setCancelable(false)
                             .setMessage(passwordString)
+                            //Copy password to clipboard
                             .setPositiveButton("Copy", new DialogInterface.OnClickListener() {
                                 @Override
                                 public void onClick(DialogInterface dialog, int which) {
@@ -122,13 +129,9 @@ public class GeneratePassword extends AppCompatActivity {
                 }
             }
         });
-
-
-
-
-
     }
 
+    // Handle back button
     @Override
     public void onBackPressed() {
         Intent intentMain = new Intent(this, HomeActivity.class);
@@ -171,7 +174,7 @@ public class GeneratePassword extends AppCompatActivity {
         // Handle item selection
         switch (item.getItemId()) {
             case R.id.exit:
-                // Back to main page - user needs to login using biometric authentication
+                // Back to main page - user needs to login using biometric authentication.
                 Intent intentMain = new Intent(this, MainActivity.class);
                 this.startActivity(intentMain);
                 finish();
@@ -200,11 +203,10 @@ public class GeneratePassword extends AppCompatActivity {
         }
     }
 
-
-
-
+    // function to generate random password and return a string
     private static String generateRandomPassword(int max_length, boolean upperCase, boolean lowerCase, boolean numbers, boolean specialCharacters)
     {
+        // range of characters to consider when randomising the password
         String upperCaseChars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
         String lowerCaseChars = "abcdefghijklmnopqrstuvwxyz";
         String numberChars = "0123456789";
@@ -234,7 +236,6 @@ public class GeneratePassword extends AppCompatActivity {
             allowedChars += specialChars;
             sb.append(specialChars.charAt(rn.nextInt(specialChars.length()-1)));
         }
-
 
         //fill the allowed length from different chars now.
         for(int i=sb.length();i < max_length;++i){

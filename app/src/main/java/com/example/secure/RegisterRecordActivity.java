@@ -2,7 +2,6 @@ package com.example.secure;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Patterns;
@@ -17,25 +16,20 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.Toast;
-
-import com.bumptech.glide.Glide;
-
-import java.util.List;
 import java.util.regex.Pattern;
-
 
 public class RegisterRecordActivity extends AppCompatActivity {
 
     //password regex
     private static final Pattern PASSWORD_PATTERN =
             Pattern.compile("^" +
-                    //"(?=.*[0-9])" +         //at least 1 digit
-                    //"(?=.*[a-z])" +         //at least 1 lower case letter
-                    //"(?=.*[A-Z])" +         //at least 1 upper case letter
+                    "(?=.*[0-9])" +         //at least 1 digit
+                    "(?=.*[a-z])" +         //at least 1 lower case letter
+                    "(?=.*[A-Z])" +         //at least 1 upper case letter
                     "(?=.*[a-zA-Z])" +      //any letter
-                    "(?=.*[@#$%^&+=])" +    //at least 1 special character
+                    "(?=.*[!@#$%^&*()_+=<>?/{}~|])" +    //at least 1 special character
                     "(?=\\S+$)" +           //no white spaces
-                    ".{6,}" +               //at least 4 characters
+                    ".{4,}" +               //at least 4 characters
                     "$");
 
     // References to buttons and other controls on the layout
@@ -55,8 +49,6 @@ public class RegisterRecordActivity extends AppCompatActivity {
         recordPassword = findViewById(R.id.text_input_password);
         recordNote = findViewById(R.id.text_input_Note);
         addRecordButton = findViewById(R.id.addRecord);
-
-//        addRecordButton.setTextColor(getResources().getColor(R.color.dark_grey));
 
         // Forcing to let the system know that contents of menu have changed, and menu should be redrawn.
         invalidateOptionsMenu();
@@ -85,11 +77,11 @@ public class RegisterRecordActivity extends AppCompatActivity {
             public void onNothingSelected(AdapterView<?> parent) {}
         });
 
-        // customised toolbar
+        // Customised toolbar
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        //Back button
+        // Back button
         toolbar.setNavigationIcon(getDrawable(R.drawable.arrow_back));
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
@@ -99,7 +91,7 @@ public class RegisterRecordActivity extends AppCompatActivity {
             }
         });
 
-        //Add records
+        // Add records
         addRecordButton.setOnClickListener((new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -215,7 +207,7 @@ public class RegisterRecordActivity extends AppCompatActivity {
 
     //Validate Name
     private boolean validateName() {
-        String nameInput = recordName.getText().toString().toString();
+        String nameInput = recordName.getText().toString().toString().trim();
 
         if (nameInput.isEmpty()) {
             recordName.setError("Field cannot be empty");
@@ -251,7 +243,7 @@ public class RegisterRecordActivity extends AppCompatActivity {
             recordPassword.setError("Field cannot be empty");
             return false;
         } else if (!PASSWORD_PATTERN.matcher(passwordInput).matches()) {
-            recordPassword.setError("Password too weak");
+            recordPassword.setError("Password must include a symbol, an uppercase, a lowercase, and a digit");
             return false;
         } else {
             recordPassword.setError(null);

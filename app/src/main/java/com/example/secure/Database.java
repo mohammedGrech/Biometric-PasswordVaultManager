@@ -1,9 +1,7 @@
 package com.example.secure;
 
 import static androidx.fragment.app.FragmentManager.TAG;
-
 import android.annotation.SuppressLint;
-import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
@@ -11,16 +9,13 @@ import android.database.sqlite.SQLiteOpenHelper;
 import android.database.sqlite.SQLiteStatement;
 import android.util.Log;
 import android.widget.Toast;
-
 import androidx.annotation.Nullable;
-
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.OutputStream;
 import java.util.ArrayList;
 import java.util.List;
-import java.sql.Statement;
 
 public class Database extends SQLiteOpenHelper {
 
@@ -215,7 +210,4 @@ public class Database extends SQLiteOpenHelper {
             e.printStackTrace();
         }
     }
-
-
-
 }

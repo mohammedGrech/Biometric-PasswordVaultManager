@@ -1,7 +1,6 @@
 package com.example.secure;
 
 import static androidx.core.app.ActivityCompat.*;
-
 import android.Manifest;
 import android.app.Activity;
 import android.content.pm.PackageManager;
@@ -23,9 +22,8 @@ public class Permissions {
         int readPermission = ActivityCompat.checkSelfPermission(activity, Manifest.permission.READ_EXTERNAL_STORAGE);
 
         if (writePermission != PackageManager.PERMISSION_DENIED || readPermission != PackageManager.PERMISSION_GRANTED) {
-            // We don't have permission so prompt the user
+            // request for permission
             requestPermissions(activity, PERMISSIONS_STORAGE, REQUEST_CODE_PERMISSIONS);
         }
     }
-
 }

@@ -1,27 +1,16 @@
 package com.example.secure;
 
-import android.Manifest;
 import android.annotation.SuppressLint;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
-import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.os.Bundle;
-
 import com.google.android.material.bottomsheet.BottomSheetDialog;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.google.android.material.snackbar.Snackbar;
-
 import androidx.annotation.NonNull;
-import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
-
 import android.os.Environment;
 import android.provider.Settings;
-import android.text.Editable;
-import android.text.TextWatcher;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -29,33 +18,21 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.HorizontalScrollView;
 import android.widget.ImageView;
-import android.widget.Toast;
-
-import androidx.appcompat.widget.PopupMenu;
 import androidx.appcompat.widget.SearchView;
 import androidx.appcompat.widget.Toolbar;
-import androidx.biometric.BiometricManager;
-import androidx.biometric.BiometricPrompt;
-import androidx.navigation.NavController;
-import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
-import androidx.navigation.ui.NavigationUI;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-
-
 import com.example.secure.databinding.ActivityHomeBinding;
-
 import java.io.File;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 public class HomeActivity extends AppCompatActivity {
 
+    // Calling classes and interfaces
     private static final String TAG = "Website vault manager";
     private AppBarConfiguration appBarConfiguration;
     private ActivityHomeBinding binding;
@@ -66,19 +43,9 @@ public class HomeActivity extends AppCompatActivity {
     private RecyclerView recyclerView;
     private RecycleViewAdapter mAdapter;
     private RecyclerView.LayoutManager layoutManager;
-
-    EditText editText;
-    String test = "";
-
-
     public Button noFilter, youtube, facebook, whatsApp, pinterest, twitter, linkedin, github, gmail, instagram, spotify, outlook, netflix, reddit, amazon, amazon_prime, others;
-
-
-    List<WebsiteModel> websiteList = new ArrayList<WebsiteModel>();
-
     Database database;
     Backup backup;
-
     HomeActivity activity;
 
     @SuppressLint("ResourceAsColor")
@@ -90,6 +57,7 @@ public class HomeActivity extends AppCompatActivity {
         binding = ActivityHomeBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
+        //Manage external storage by checking SDK version
         if (Build.VERSION.SDK_INT >= 30){
             if (!Environment.isExternalStorageManager()){
                 Intent getPermission = new Intent();
@@ -98,6 +66,7 @@ public class HomeActivity extends AppCompatActivity {
             }
         }
 
+        // Instantiate new backup
         backup = new Backup(this);
 
         // customised toolbar
@@ -109,7 +78,8 @@ public class HomeActivity extends AppCompatActivity {
 
         //Bottom Sheet set up
         showSheet = findViewById(R.id.button_open_bottom_sheet);
-        //manage bottom sheet dialog box
+
+        // Manage bottom sheet dialog box
         showSheet.setOnClickListener(new View.OnClickListener() {
             @SuppressLint("MissingInflatedId")
             @Override
@@ -127,7 +97,7 @@ public class HomeActivity extends AppCompatActivity {
                         bottomSheetDialog.dismiss();
                     }
                 });
-                // handle generating password (Work to do)
+                // handle generating password
                 sheetView.findViewById(R.id.generatePassword).setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
@@ -136,7 +106,7 @@ public class HomeActivity extends AppCompatActivity {
                         bottomSheetDialog.dismiss();
                     }
                 });
-                // handle creating record (Work to do)
+                // handle creating record
                 sheetView.findViewById(R.id.newRecord).setOnClickListener(new View.OnClickListener() {
 
                     @Override
@@ -152,15 +122,11 @@ public class HomeActivity extends AppCompatActivity {
             }
         });
 
-
-//        //Code to show all the website records
+       // Show all the website records
         database = new Database(HomeActivity.this);
         List<WebsiteModel> websiteList = database.getAllWebsites();
 
         recyclerView = findViewById(R.id.recyclerViewWebsites);
-
-        //Use this setting to improve performance if yu know that changed
-        // in content do not change the layout sizer of the recyclerView
         recyclerView.setHasFixedSize(true);
 
         //use a linear layout manager
@@ -171,10 +137,9 @@ public class HomeActivity extends AppCompatActivity {
         mAdapter = new RecycleViewAdapter(websiteList, HomeActivity.this);
         recyclerView.setAdapter(mAdapter);
 
-
+        //Following elements are related to website filtering
         scrollView = findViewById(R.id.filter_hsv);
         noFilter = findViewById(R.id.filter_all);
-
         facebook = findViewById(R.id.filter_facebook);
         netflix = findViewById(R.id.filter_netflix);
         amazon = findViewById(R.id.filter_amazon);
@@ -192,6 +157,7 @@ public class HomeActivity extends AppCompatActivity {
         outlook = findViewById(R.id.filter_outlook);
         others = findViewById(R.id.filter_others);
 
+        // This function remove all filters
         noFilter.setOnClickListener(v -> {
             mAdapter.getFilter().filter("");
             scrollView.setVisibility(View.GONE);
@@ -213,6 +179,8 @@ public class HomeActivity extends AppCompatActivity {
             changeBackground(facebook);
         });
 
+        // The following functions filter by their respective logo
+        //Filter by Netflix
         netflix.setOnClickListener(v -> {
             String netflixStr = (String) netflix.getText();
             mAdapter.getFilter().filter(netflixStr);
@@ -220,6 +188,7 @@ public class HomeActivity extends AppCompatActivity {
             changeBackground(netflix);
         });
 
+        //Filter by amazon
         amazon.setOnClickListener(v -> {
             String amazonStr = (String) amazon.getText();
             mAdapter.getFilter().filter(amazonStr);
@@ -227,6 +196,7 @@ public class HomeActivity extends AppCompatActivity {
             changeBackground(amazon);
         });
 
+        //Filter by github
         github.setOnClickListener(v -> {
             String githubStr = (String) github.getText();
             mAdapter.getFilter().filter(githubStr);
@@ -234,6 +204,7 @@ public class HomeActivity extends AppCompatActivity {
             changeBackground(github);
         });
 
+        //Filter by reddit
         reddit.setOnClickListener(v -> {
             String redditStr = (String) reddit.getText();
             mAdapter.getFilter().filter(redditStr);
@@ -241,6 +212,7 @@ public class HomeActivity extends AppCompatActivity {
             changeBackground(reddit);
         });
 
+        //Filter by amazon_prime
         amazon_prime.setOnClickListener(v -> {
             String amazon_primeStr = (String) amazon_prime.getText();
             mAdapter.getFilter().filter(amazon_primeStr);
@@ -248,6 +220,7 @@ public class HomeActivity extends AppCompatActivity {
             changeBackground(amazon_prime);
         });
 
+        //Filter by youtube
         youtube.setOnClickListener(v -> {
             String youtubeStr = (String) youtube.getText();
             mAdapter.getFilter().filter(youtubeStr);
@@ -255,6 +228,7 @@ public class HomeActivity extends AppCompatActivity {
             changeBackground(youtube);
         });
 
+        //Filter by whatsApp
         whatsApp.setOnClickListener(v -> {
             String whatsAppStr = (String) whatsApp.getText();
             mAdapter.getFilter().filter(whatsAppStr);
@@ -262,6 +236,7 @@ public class HomeActivity extends AppCompatActivity {
             changeBackground(whatsApp);
         });
 
+        //Filter by pinterest
         pinterest.setOnClickListener(v -> {
             String pinterestStr = (String) pinterest.getText();
             mAdapter.getFilter().filter(pinterestStr);
@@ -269,6 +244,7 @@ public class HomeActivity extends AppCompatActivity {
             changeBackground(pinterest);
         });
 
+        //Filter by twitter
         twitter.setOnClickListener(v -> {
             String twitterStr = (String) twitter.getText();
             mAdapter.getFilter().filter(twitterStr);
@@ -276,6 +252,7 @@ public class HomeActivity extends AppCompatActivity {
             changeBackground(twitter);
         });
 
+        //Filter by linkedin
         linkedin.setOnClickListener(v -> {
             String linkedinStr = (String) linkedin.getText();
             mAdapter.getFilter().filter(linkedinStr);
@@ -283,6 +260,7 @@ public class HomeActivity extends AppCompatActivity {
             changeBackground(linkedin);
         });
 
+        //Filter by gmail
         gmail.setOnClickListener(v -> {
             String gmailStr = (String) gmail.getText();
             mAdapter.getFilter().filter(gmailStr);
@@ -290,6 +268,7 @@ public class HomeActivity extends AppCompatActivity {
             changeBackground(gmail);
         });
 
+        //Filter by instagram
         instagram.setOnClickListener(v -> {
             String instagramStr = (String) instagram.getText();
             mAdapter.getFilter().filter(instagramStr);
@@ -297,6 +276,7 @@ public class HomeActivity extends AppCompatActivity {
             changeBackground(instagram);
         });
 
+        //Filter by spotify
         spotify.setOnClickListener(v -> {
             String spotifyStr = (String) spotify.getText();
             mAdapter.getFilter().filter(spotifyStr);
@@ -304,6 +284,7 @@ public class HomeActivity extends AppCompatActivity {
             changeBackground(spotify);
         });
 
+        //Filter by outlook
         outlook.setOnClickListener(v -> {
             String outlookStr = (String) outlook.getText();
             mAdapter.getFilter().filter(outlookStr);
@@ -312,13 +293,16 @@ public class HomeActivity extends AppCompatActivity {
         });
     }
 
+    // change background when filter button is selected
     public void changeBackground(Button button){
         button.setBackground(getDrawable(R.drawable.filter_button_selected));
         button.setTextColor(Color.WHITE);
     }
 
+    // reset background colour of the filters
     @SuppressLint("UseCompatLoadingForDrawables")
     public void resetBackground(){
+        // Set background colour of all filter buttons to their initial colours
         facebook.setBackground(getDrawable(R.drawable.filter_buttons));
         netflix.setBackground(getDrawable(R.drawable.filter_buttons));
         amazon.setBackground(getDrawable(R.drawable.filter_buttons));
@@ -336,6 +320,7 @@ public class HomeActivity extends AppCompatActivity {
         outlook.setBackground(getDrawable(R.drawable.filter_buttons));
         others.setBackground(getDrawable(R.drawable.filter_buttons));
 
+        // Set text colour of all filter buttons to black
         facebook.setTextColor(Color.BLACK);
         netflix.setTextColor(Color.BLACK);
         amazon.setTextColor(Color.BLACK);
@@ -353,8 +338,6 @@ public class HomeActivity extends AppCompatActivity {
         outlook.setTextColor(Color.BLACK);
         others.setTextColor(Color.BLACK);
     }
-
-
 
     // Handle back button
     @Override
@@ -389,6 +372,7 @@ public class HomeActivity extends AppCompatActivity {
         inflater.inflate(R.menu.option_menu,menu);
 
         MenuItem.OnActionExpandListener onActionExpandListener = new MenuItem.OnActionExpandListener() {
+
         //Function to expand the search bar
         @Override
         public boolean onMenuItemActionExpand(@NonNull MenuItem item) {

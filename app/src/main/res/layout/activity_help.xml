@@ -14,24 +14,21 @@
         layout="@layout/toolbar" />
 
     <!--  Page Title  -->
-
-    <!--  Question_1 header  -->
-
     <TextView
         android:id="@+id/textView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
+        android:layout_marginTop="80dp"
         android:text="Help"
         android:textColor="@color/black"
         android:textSize="28sp"
-        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.115" />
+        app:layout_constraintTop_toTopOf="parent" />
 
+    <!--  Question_1 header  -->
     <TextView
         android:layout_width="270dp"
         android:layout_height="wrap_content"

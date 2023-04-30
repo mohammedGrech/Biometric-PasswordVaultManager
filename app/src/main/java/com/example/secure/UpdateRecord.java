@@ -3,11 +3,8 @@ package com.example.secure;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
-
 import android.content.Intent;
-import android.os.Build;
 import android.os.Bundle;
-import android.util.Log;
 import android.util.Patterns;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -22,10 +19,6 @@ import android.widget.ScrollView;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
-
-import com.bumptech.glide.Glide;
-
-import java.lang.ref.WeakReference;
 import java.util.regex.Pattern;
 
 public class UpdateRecord extends AppCompatActivity {
@@ -40,18 +33,16 @@ public class UpdateRecord extends AppCompatActivity {
     Spinner spinner;
     private static TextView updateTitle;
 
-    public int success = 0;
-
     //Password regex
     private static final Pattern PASSWORD_PATTERN =
             Pattern.compile("^" +
-                    //"(?=.*[0-9])" +         //at least 1 digit
-                    //"(?=.*[a-z])" +         //at least 1 lower case letter
-                    //"(?=.*[A-Z])" +         //at least 1 upper case letter
+                    "(?=.*[0-9])" +         //at least 1 digit
+                    "(?=.*[a-z])" +         //at least 1 lower case letter
+                    "(?=.*[A-Z])" +         //at least 1 upper case letter
                     "(?=.*[a-zA-Z])" +      //any letter
-                    "(?=.*[@#$%^&+=])" +    //at least 1 special character
+                    "(?=.*[!@#$%^&*()_+=<>?/{}~|])" +    //at least 1 special character
                     "(?=\\S+$)" +           //no white spaces
-                    ".{6,}" +               //at least 4 characters
+                    ".{4,}" +               //at least 4 characters
                     "$");
 
     @Override
@@ -61,8 +52,6 @@ public class UpdateRecord extends AppCompatActivity {
 
         // Forcing to let the system know that contents of menu have changed, and menu should be redrawn.
         invalidateOptionsMenu();
-
-        Integer success;
 
         biometric = new Biometric();
         biometric.biometricPromptAccessData(UpdateRecord.this);
@@ -103,7 +92,6 @@ public class UpdateRecord extends AppCompatActivity {
 
                 //Display logo
                 displayLogo(logo, logoText);
-//                Toast.makeText(getApplicationContext(), logoText + " 1", Toast.LENGTH_SHORT).show();
             }
             @Override
             public void onNothingSelected(AdapterView<?> parent) {
@@ -159,14 +147,14 @@ public class UpdateRecord extends AppCompatActivity {
         });
     }
 
+    // This function is being called in the biometric class when user authenticate
     public void result(boolean authenticate){
         if (authenticate == true){
             updateTitle.setText("Update Record");
             scrollView.setVisibility(View.VISIBLE);
             updateRecordButton.setVisibility(View.VISIBLE);
-            System.out.println("It is bloody working!");
         }else {
-            System.out.println("Nope!");
+            System.out.println("Failed to proceed");
         }
     }
 
@@ -208,7 +196,8 @@ public class UpdateRecord extends AppCompatActivity {
             updateRecordPassword.setError("Field cannot be empty");
             return false;
         } else if (!PASSWORD_PATTERN.matcher(passwordInput).matches()) {
-            updateRecordPassword.setError("Password too weak");
+            updateRecordPassword.setError("Password must include a symbol, an uppercase, a lowercase, and a digit");
+
             return false;
         } else {
             updateRecordPassword.setError(null);
@@ -264,6 +253,7 @@ public class UpdateRecord extends AppCompatActivity {
         }
     }
 
+    // Handle back button
     @Override
     public void onBackPressed() {
         Intent intentMain = new Intent(this, HomeActivity.class);

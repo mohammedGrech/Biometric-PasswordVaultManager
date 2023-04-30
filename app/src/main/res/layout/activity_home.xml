@@ -9,7 +9,6 @@
     android:background="@color/white"
     android:filterTouchesWhenObscured="true">
 
-    <!--  Floating button  -->
 
     <include
         android:id="@+id/toolbar"
@@ -23,7 +22,7 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0" />
 
-
+    <!--  Floating button  -->
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/button_open_bottom_sheet"
         android:layout_width="wrap_content"
@@ -48,6 +47,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/filter_hsv" />
 
+    <!--  Filters  -->
     <HorizontalScrollView
         android:id="@+id/filter_hsv"
         android:layout_width="match_parent"

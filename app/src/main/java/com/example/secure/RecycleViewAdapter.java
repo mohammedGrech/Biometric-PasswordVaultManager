@@ -2,18 +2,12 @@ package com.example.secure;
 
 import android.annotation.SuppressLint;
 import android.app.AlertDialog;
-import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.os.Bundle;
-import android.os.Handler;
-import android.os.Looper;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
-import android.widget.EditText;
 import android.widget.Filter;
 import android.widget.Filterable;
 import android.widget.ImageButton;
@@ -33,13 +27,10 @@ import java.util.List;
 
 public class RecycleViewAdapter extends RecyclerView.Adapter<RecycleViewAdapter.MyViewHolder> implements Filterable {
 
+    // Instantiate a list of websites
     List<WebsiteModel> websiteModels;
-    List<WebsiteModel> getWebsiteModelsFilter = new ArrayList<>();
+    List<WebsiteModel> getWebsiteModelsFilter;
     Context context;
-
-    Biometric biometric;
-    public BiometricPrompt biometricPrompt;
-    public BiometricPrompt.PromptInfo promptInfo;
 
     public RecycleViewAdapter(List<WebsiteModel> websiteModels, Context context) {
         this.websiteModels = websiteModels;
@@ -47,6 +38,7 @@ public class RecycleViewAdapter extends RecyclerView.Adapter<RecycleViewAdapter.
         this.getWebsiteModelsFilter = websiteModels;
     }
 
+    // display each credential based on the created layout
     @NonNull
     @Override
     public MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
@@ -55,6 +47,7 @@ public class RecycleViewAdapter extends RecyclerView.Adapter<RecycleViewAdapter.
         return holder;
     }
 
+    // this function handles delete, update of record, and getting values from viewHolder
     @SuppressLint("SetTextI18n")
     @Override
     public void onBindViewHolder(@NonNull MyViewHolder holder, @SuppressLint("RecyclerView") int position) {
@@ -114,7 +107,6 @@ public class RecycleViewAdapter extends RecyclerView.Adapter<RecycleViewAdapter.
         holder.recordLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
                 //Open update activity and pass data to it
                 Intent intent = new Intent(context, UpdateRecord.class);
                 intent.putExtra("id", Integer.valueOf(websiteModels.get(index).getId()));
@@ -211,7 +203,7 @@ public class RecycleViewAdapter extends RecyclerView.Adapter<RecycleViewAdapter.
         return websiteModels.size();
     }
 
-
+    // Search function
     public Filter getSearch() {
         Filter filter = new Filter() {
             @Override
@@ -243,6 +235,7 @@ public class RecycleViewAdapter extends RecyclerView.Adapter<RecycleViewAdapter.
         return filter;
     }
 
+    // Filter function
     @Override
     public Filter getFilter() {
         Filter filter = new Filter() {
@@ -275,6 +268,7 @@ public class RecycleViewAdapter extends RecyclerView.Adapter<RecycleViewAdapter.
         return filter;
     }
 
+    // this function finds elements by ID
     public class MyViewHolder extends RecyclerView.ViewHolder{
         TextView recordName;
         ImageView recordLogo;

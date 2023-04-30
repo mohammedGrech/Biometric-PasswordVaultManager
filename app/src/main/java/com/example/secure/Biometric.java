@@ -1,34 +1,20 @@
 package com.example.secure;
 
-import android.app.Activity;
-import android.app.AlertDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Build;
-import android.security.keystore.KeyGenParameterSpec;
-import android.security.keystore.KeyProperties;
 import android.widget.Toast;
-
 import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
 import androidx.biometric.BiometricManager;
 import androidx.biometric.BiometricPrompt;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.FragmentActivity;
-
-import java.security.KeyStore;
-import java.security.NoSuchAlgorithmException;
-import java.security.NoSuchProviderException;
 import java.util.concurrent.Executor;
-
-import javax.crypto.Cipher;
-import javax.crypto.KeyGenerator;
-import javax.crypto.NoSuchPaddingException;
-import javax.crypto.SecretKey;
-
 
 public class Biometric {
 
+    // importing classes and interface for biometric
     private Executor executor;
     private BiometricPrompt biometricPrompt;
     public BiometricPrompt.PromptInfo promptInfo;
@@ -97,6 +83,11 @@ public class Biometric {
         biometricPrompt.authenticate(promptInfo);
     }
 
+    /* This function is an extra layer of security to handle updating records.
+       When the user open a record, this function will run and upon
+       succeeding the authentication, the update page will display the detail of the record.
+       In the ven authentication fails, the user will not be able to view the details of the record.
+    * */
     public void biometricPromptAccessData(Context context){
         //Create executor
         executor = ContextCompat.getMainExecutor(context);
@@ -116,7 +107,7 @@ public class Biometric {
                 super.onAuthenticationSucceeded(result);
                 Toast.makeText(context.getApplicationContext(), "Access granted", Toast.LENGTH_SHORT).show();
                 authenticate = true;
-
+                //If authentication succeed, open update record and pass the authentication state to result function.
                 UpdateRecord updateRecord = new UpdateRecord();
                 updateRecord.result(authenticate);
             }

@@ -35,15 +35,17 @@
 
     <!--  Login button  -->
     <Button
-    android:id="@+id/login_btn"
-    android:layout_width="302dp"
-    android:layout_height="48dp"
-    android:layout_marginTop="510dp"
-    android:backgroundTint="@color/dark_grey"
-    android:background="@drawable/login_shape"
-    android:layout_centerHorizontal="true"
-    android:text="Login"
-    android:textAllCaps="false"
-    android:paddingHorizontal="24dp"/>
+        android:id="@+id/login_btn"
+        android:layout_width="302dp"
+        android:layout_height="48dp"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="510dp"
+        android:layout_marginBottom="160dp"
+        android:background="@drawable/login_shape"
+        android:backgroundTint="@color/dark_grey"
+        android:paddingHorizontal="24dp"
+        android:text="Login"
+        android:textAllCaps="false" />
 
 </RelativeLayout>

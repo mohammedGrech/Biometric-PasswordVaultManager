@@ -19,17 +19,17 @@
         android:id="@+id/updateTitle"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="15dp"
+        android:layout_marginTop="22dp"
+        android:layout_marginBottom="10dp"
         android:gravity="center_horizontal"
         android:text="Update Record"
         android:textColor="@color/black"
         android:textSize="28sp" />
 
-
     <ScrollView
         android:id="@+id/updateScrollView"
         android:layout_width="match_parent"
-        android:layout_height="470dp">
+        android:layout_height="480dp">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -159,7 +159,6 @@
         </LinearLayout>
     </ScrollView>
 
-
     <!--Add Button-->
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/updateRecord"
@@ -171,7 +170,7 @@
         android:textAllCaps="false"
         android:shadowColor="@color/white"
         android:background="@drawable/custom_button"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="40dp"
         android:textColor="@color/white" />
 
 </LinearLayout>

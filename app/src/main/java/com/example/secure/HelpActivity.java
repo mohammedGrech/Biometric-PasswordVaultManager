@@ -3,21 +3,14 @@ package com.example.secure;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import android.content.Intent;
-import android.graphics.drawable.Icon;
 import android.os.Bundle;
-import android.os.Environment;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Button;
 import android.widget.Toast;
 
-import java.io.File;
-
 public class HelpActivity extends AppCompatActivity {
-
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,12 +20,14 @@ public class HelpActivity extends AppCompatActivity {
         // customised toolbar
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        //Back button
+
+        // Back button
         toolbar.setNavigationIcon(getDrawable(R.drawable.arrow_back));
 
         // Forcing to let the system know that contents of menu have changed, and menu should be redrawn.
         invalidateOptionsMenu();
 
+        // Handle back button in the toolbar
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -40,10 +35,12 @@ public class HelpActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+
         // Change the title of the activity on the toolbar
         getSupportActionBar().setTitle("Help");
     }
 
+    // Handle back button
     @Override
     public void onBackPressed() {
         Intent intentMain = new Intent(this, HomeActivity.class);
